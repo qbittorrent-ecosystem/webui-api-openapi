@@ -1,7 +1,0 @@
-type: object
-additionalProperties:
-  type: integer
-  format: int64
-example:
-  8c212779b4abde7c6bc608063a0d008b7e40ce32: 338944
-  284b83c9c7935002391129fd97f43db5d7cc2ba0: 123

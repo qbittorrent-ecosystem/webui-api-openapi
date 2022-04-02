@@ -1,0 +1,21 @@
+{
+  "name": "qb-webui-api-openapi",
+  "description": "qBittorrent WebUI API OpenAPI specification",
+  "private": true,
+  "scripts": {
+    "validate": "swagger-cli validate",
+    "bundle": "swagger-cli bundle openapi.yaml --outfile build/openapi.yaml --type yaml"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ultram4rine/qb-webui-api-openapi.git"
+  },
+  "author": "ultram4rine",
+  "bugs": {
+    "url": "https://github.com/ultram4rine/qb-webui-api-openapi/issues"
+  },
+  "homepage": "https://github.com/ultram4rine/qb-webui-api-openapi#readme",
+  "devDependencies": {
+    "swagger-cli": "^4.0.4"
+  }
+}

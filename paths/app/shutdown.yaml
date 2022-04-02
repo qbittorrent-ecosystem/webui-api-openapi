@@ -1,0 +1,13 @@
+get:
+  tags:
+    - app
+  summary: Shutdown application
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#shutdown-application"
+    description: WebUI-API on qBittorrent wiki
+  operationId: appShutdownGet
+  responses:
+    "200":
+      description: All scenarios
+  security:
+    - sid: []

@@ -1,0 +1,237 @@
+openapi: 3.0.3
+
+info:
+  title: qBittorrent WebUI API
+  description: |
+    - All API methods are under `/api/v2/APIName/methodName`, where `APIName` is a certain subgroup of API methods whose functionality is related.
+    - Either `GET` or `POST` can be used as the request type for all API methods.
+    - All API methods require [authentication](https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#authentication) (except the `/api/v2/auth/login` method itself, obviously).
+  termsOfService: "https://github.com/qbittorrent/qBittorrent/blob/master/COPYING"
+  license:
+    name: GNU GPLv2
+    url: "https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html"
+  version: 2.0.0
+
+servers:
+  - url: http://localhost:8080/api/v2
+    description: qBittorrent Web UI API
+
+paths:
+  /auth/login:
+    $ref: "./paths/auth/login.yaml"
+  /auth/logout:
+    $ref: "./paths/auth/logout.yaml"
+
+  /app/version:
+    $ref: "./paths/app/version.yaml"
+  /app/webapiVersion:
+    $ref: "./paths/app/webapiVersion.yaml"
+  /app/shutdown:
+    $ref: "./paths/app/shutdown.yaml"
+  /app/preferences:
+    $ref: "./paths/app/preferences.yaml"
+  /app/setPreferences:
+    $ref: "./paths/app/setPreferences.yaml"
+  /app/defaultSavePath:
+    $ref: "./paths/app/defaultSavePath.yaml"
+
+  /log/main:
+    $ref: "./paths/log/main.yaml"
+  /log/peers:
+    $ref: "./paths/log/peers.yaml"
+
+  /sync/maindata:
+    $ref: "./paths/sync/maindata.yaml"
+  /sync/torrentPeers:
+    $ref: "./paths/sync/torrentPeers.yaml"
+
+  /transfer/info:
+    $ref: "./paths/transfer/info.yaml"
+  /transfer/speedLimitsMode:
+    $ref: "./paths/transfer/speedLimitsMode.yaml"
+  /transfer/toggleSpeedLimitsMode:
+    $ref: "./paths/transfer/toggleSpeedLimitsMode.yaml"
+  /transfer/downloadLimit:
+    $ref: "./paths/transfer/downloadLimit.yaml"
+  /transfer/setDownloadLimit:
+    $ref: "./paths/transfer/setDownloadLimit.yaml"
+  /transfer/uploadLimit:
+    $ref: "./paths/transfer/uploadLimit.yaml"
+  /transfer/setUploadLimit:
+    $ref: "./paths/transfer/setUploadLimit.yaml"
+
+  /torrents/info:
+    $ref: "./paths/torrents/info.yaml"
+  /torrents/properties:
+    $ref: "./paths/torrents/properties.yaml"
+  /torrents/trackers:
+    $ref: "./paths/torrents/trackers.yaml"
+  /torrents/webseeds:
+    $ref: "./paths/torrents/webseeds.yaml"
+  /torrents/files:
+    $ref: "./paths/torrents/files.yaml"
+  /torrents/pieceStates:
+    $ref: "./paths/torrents/pieceStates.yaml"
+  /torrents/pieceHashes:
+    $ref: "./paths/torrents/pieceHashes.yaml"
+  /torrents/pause:
+    $ref: "./paths/torrents/pause.yaml"
+  /torrents/resume:
+    $ref: "./paths/torrents/resume.yaml"
+  /torrents/delete:
+    $ref: "./paths/torrents/delete.yaml"
+  /torrents/recheck:
+    $ref: "./paths/torrents/recheck.yaml"
+  /torrents/add:
+    $ref: "./paths/torrents/add.yaml"
+  /torrents/addTrackers:
+    $ref: "./paths/torrents/addTrackers.yaml"
+  /torrents/increasePrio:
+    $ref: "./paths/torrents/increasePrio.yaml"
+  /torrents/decreasePrio:
+    $ref: "./paths/torrents/decreasePrio.yaml"
+  /torrents/topPrio:
+    $ref: "./paths/torrents/topPrio.yaml"
+  /torrents/bottomPrio:
+    $ref: "./paths/torrents/bottomPrio.yaml"
+  /torrents/filePrio:
+    $ref: "./paths/torrents/filePrio.yaml"
+  /torrents/downloadLimit:
+    $ref: "./paths/torrents/downloadLimit.yaml"
+  /torrents/setDownloadLimit:
+    $ref: "./paths/torrents/setDownloadLimit.yaml"
+  /torrents/uploadLimit:
+    $ref: "./paths/torrents/uploadLimit.yaml"
+  /torrents/setUploadLimit:
+    $ref: "./paths/torrents/setUploadLimit.yaml"
+  /torrents/setLocation:
+    $ref: "./paths/torrents/setLocation.yaml"
+  /torrents/rename:
+    $ref: "./paths/torrents/rename.yaml"
+  /torrents/setCategory:
+    $ref: "./paths/torrents/setCategory.yaml"
+  /torrents/createCategory:
+    $ref: "./paths/torrents/createCategory.yaml"
+  /torrents/removeCategories:
+    $ref: "./paths/torrents/removeCategories.yaml"
+  /torrents/setAutoManagement:
+    $ref: "./paths/torrents/setAutoManagement.yaml"
+  /torrents/toggleSequentialDownload:
+    $ref: "./paths/torrents/toggleSequentialDownload.yaml"
+  /torrents/toggleFirstLastPiecePrio:
+    $ref: "./paths/torrents/toggleFirstLastPiecePrio.yaml"
+  /torrents/setForceStart:
+    $ref: "./paths/torrents/setForceStart.yaml"
+  /torrents/setSuperSeeding:
+    $ref: "./paths/torrents/setSuperSeeding.yaml"
+
+  /rss/addFolder:
+    $ref: "./paths/rss/addFolder.yaml"
+  /rss/addFeed:
+    $ref: "./paths/rss/addFeed.yaml"
+  /rss/removeItem:
+    $ref: "./paths/rss/removeItem.yaml"
+  /rss/moveItem:
+    $ref: "./paths/rss/moveItem.yaml"
+  /rss/items:
+    $ref: "./paths/rss/items.yaml"
+  /rss/setRule:
+    $ref: "./paths/rss/setRule.yaml"
+  /rss/renameRule:
+    $ref: "./paths/rss/renameRule.yaml"
+  /rss/removeRule:
+    $ref: "./paths/rss/removeRule.yaml"
+  /rss/rules:
+    $ref: "./paths/rss/rules.yaml"
+
+components:
+  schemas:
+    Preferences:
+      $ref: "./schemas/app/Preferences.yaml"
+    MainLog:
+      $ref: "./schemas/log/MainLog.yaml"
+    PeersLog:
+      $ref: "./schemas/log/PeersLog.yaml"
+    MainData:
+      $ref: "./schemas/sync/MainData.yaml"
+    TorrentPeers:
+      $ref: "./schemas/sync/TorrentPeers.yaml"
+    TransferInfo:
+      $ref: "./schemas/transfer/TransferInfo.yaml"
+    TorrentInfo:
+      $ref: "./schemas/torrents/TorrentInfo.yaml"
+    TorrentsProperties:
+      $ref: "./schemas/torrents/TorrentsProperties.yaml"
+    TorrentsTrackers:
+      $ref: "./schemas/torrents/TorrentsTrackers.yaml"
+    TorrentsWebseeds:
+      $ref: "./schemas/torrents/TorrentsWebseeds.yaml"
+    TorrentsFiles:
+      $ref: "./schemas/torrents/TorrentsFiles.yaml"
+    Hashes:
+      $ref: "./schemas/torrents/Hashes.yaml"
+    AddTorrentsURLs:
+      $ref: "./schemas/torrents/AddTorrentsURLs.yaml"
+    AddTorrentsFiles:
+      $ref: "./schemas/torrents/AddTorrentsFiles.yaml"
+    AddTorrentsCommon:
+      $ref: "./schemas/torrents/AddTorrentsCommon.yaml"
+    TorrentsLimit:
+      $ref: "./schemas/torrents/TorrentsLimit.yaml"
+    SetTorrentsLimit:
+      $ref: "./schemas/torrents/SetTorrentsLimit.yaml"
+    Category:
+      $ref: "./schemas/torrents/Category.yaml"
+    SetTorrentsValue:
+      $ref: "./schemas/torrents/SetTorrentsValue.yaml"
+    RssRuleDef:
+      $ref: "./schemas/rss/RssRuleDef.yaml"
+  securitySchemes:
+    sid:
+      type: apiKey
+      name: SID
+      in: cookie
+
+tags:
+  - name: auth
+    description: |
+      All Authentication API methods are under "auth", e.g.: `/api/v2/auth/methodName`.
+
+      qBittorrent uses cookie-based authentication.
+    externalDocs:
+      url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#authentication"
+      description: qBittorrent WebUI API documentation
+  - name: app
+    description: 'All Application API methods are under "app", e.g.: `/api/v2/app/methodName`.'
+    externalDocs:
+      url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#application"
+      description: qBittorrent WebUI API documentation
+  - name: log
+    description: 'All Log API methods are under "log", e.g.: `/api/v2/log/methodName.`'
+    externalDocs:
+      url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#log"
+      description: qBittorrent WebUI API documentation
+  - name: sync
+    description: 'Sync API implements requests for obtaining changes since the last request. All Sync API methods are under "sync", e.g.: `/api/v2/sync/methodName.`'
+    externalDocs:
+      url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#sync"
+      description: qBittorrent WebUI API documentation
+  - name: transfer
+    description: 'All Transfer info API methods are under "transfer", e.g.: `/api/v2/transfer/methodName.`'
+    externalDocs:
+      url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#transfer-info"
+      description: qBittorrent WebUI API documentation
+  - name: torrents
+    description: 'All Torrent management API methods are under "torrents", e.g.: `/api/v2/torrents/methodName.`'
+    externalDocs:
+      url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#torrent-management"
+      description: qBittorrent WebUI API documentation
+  - name: rss
+    description: 'All RSS API methods are under "rss", e.g.: `/api/v2/rss/methodName.`'
+    externalDocs:
+      url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#rss-experimental"
+      description: qBittorrent WebUI API documentation
+
+externalDocs:
+  url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)"
+  description: qBittorrent WebUI API documentation

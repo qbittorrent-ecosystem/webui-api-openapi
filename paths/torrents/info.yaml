@@ -1,0 +1,84 @@
+post:
+  tags:
+    - torrents
+  summary: Get torrent list
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-list"
+    description: WebUI-API on qBittorrent wiki
+  operationId: torrentsInfoPost
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            filter:
+              type: string
+              enum:
+                - all
+                - downloading
+                - seeding
+                - completed
+                - paused
+                - active
+                - inactive
+                - resumed
+                - errored
+              description: "Filter torrent list by state. Allowed state filters: `all`, `downloading`, `seeding`, `completed`, `paused`, `active`, `inactive`, `resumed`, `errored`"
+            category:
+              type: string
+              description: 'Get torrents with the given category (empty string means "without category"; no "category" parameter means "any category" <- broken until [#11748](https://github.com/qbittorrent/qBittorrent/issues/11748) is resolved). Remember to URL-encode the category name. For example, `My category` becomes `My%20category`'
+            sort:
+              type: string
+              description: Sort torrents by given key. They can be sorted using any field of the response's JSON array (which are documented below) as the sort key.
+            reverse:
+              type: boolean
+              description: Enable reverse sorting. Defaults to `false`
+              default: false
+            limit:
+              type: integer
+              format: int64
+              description: Limit the number of torrents returned
+            offset:
+              type: integer
+              format: int64
+              description: "Set offset (if less than 0, offset from end)"
+        example: /api/v2/torrents/info?filter=downloading&category=sample%20category&sort=ratio
+    required: true
+  responses:
+    "200":
+      description: All scenarios- see JSON below
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/torrents/TorrentInfo.yaml"
+            description: The response is a JSON array with the following fields
+            example: |
+              [
+                {
+                  "dlspeed":9681262,
+                  "eta":87,
+                  "f_l_piece_prio":false,
+                  "force_start":false,
+                  "hash":"8c212779b4abde7c6bc608063a0d008b7e40ce32",
+                  "category":"",
+                  "tags": "",
+                  "name":"debian-8.1.0-amd64-CD-1.iso",
+                  "num_complete":-1,
+                  "num_incomplete":-1,
+                  "num_leechs":2,
+                  "num_seeds":54,
+                  "priority":1,
+                  "progress":0.16108787059783936,
+                  "ratio":0,
+                  "seq_dl":false,
+                  "size":657457152,
+                  "state":"downloading",
+                  "super_seeding":false,
+                  "upspeed":0
+                }
+              ]
+  security:
+    - sid: []

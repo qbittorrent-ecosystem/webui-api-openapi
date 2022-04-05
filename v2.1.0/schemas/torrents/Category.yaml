@@ -2,5 +2,8 @@ type: object
 properties:
   category:
     type: string
+  savePath:
+    type: string
 required:
   - category
+  - savePath

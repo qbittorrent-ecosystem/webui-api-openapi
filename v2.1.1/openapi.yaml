@@ -114,6 +114,8 @@ paths:
     $ref: "./paths/torrents/rename.yaml"
   /torrents/setCategory:
     $ref: "./paths/torrents/setCategory.yaml"
+  /torrents/categories:
+    $ref: "./paths/torrents/categories.yaml"
   /torrents/createCategory:
     $ref: "./paths/torrents/createCategory.yaml"
   /torrents/editCategory:

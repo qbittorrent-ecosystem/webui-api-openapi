@@ -30,7 +30,12 @@ get:
                   type: array
                   description: List of category objects
                   items:
-                    type: string
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
                 url:
                   type: string
                   description: URL of the torrent site

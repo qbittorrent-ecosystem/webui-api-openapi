@@ -190,8 +190,6 @@ paths:
     $ref: "./paths/search/results.yaml"
   /search/delete:
     $ref: "./paths/search/delete.yaml"
-  /search/categories:
-    $ref: "./paths/search/categories.yaml"
   /search/plugins:
     $ref: "./paths/search/plugins.yaml"
   /search/installPlugin:

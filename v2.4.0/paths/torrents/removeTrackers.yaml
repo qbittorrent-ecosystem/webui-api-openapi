@@ -1,0 +1,39 @@
+post:
+  tags:
+    - torrents
+  summary: Remove trackers
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#remove-trackers"
+    description: WebUI-API on qBittorrent wiki
+  operationId: torrentsRemoveTrackersPost
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            hash:
+              type: string
+              description: The hash of the torrent
+            urls:
+              type: array
+              items:
+                type: string
+              description: "URLs to remove, separated by `|`"
+          required:
+            - hash
+            - urls
+        encoding:
+          urls:
+            style: pipeDelimited
+            explode: false
+    required: true
+  responses:
+    "200":
+      description: All other scenarios
+    "404":
+      description: Torrent hash was not found
+    "409":
+      description: All `urls` were not found
+  security:
+    - sid: []

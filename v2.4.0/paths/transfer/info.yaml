@@ -1,0 +1,18 @@
+get:
+  tags:
+    - transfer
+  summary: Get global transfer info
+  description: This method returns info you usually see in qBt status bar.
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-global-transfer-info"
+    description: WebUI-API on qBittorrent wiki
+  operationId: transferInfoGet
+  responses:
+    "200":
+      description: All scenarios- see JSON below
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/transfer/TransferInfo.yaml"
+  security:
+    - sid: []

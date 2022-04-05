@@ -1,0 +1,40 @@
+post:
+  tags:
+    - sync
+  summary: Get main data
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-main-data"
+    description: WebUI-API on qBittorrent wiki
+  operationId: syncMaindataPost
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            rid:
+              type: integer
+              format: int64
+              description: "Response ID. If not provided, `rid=0` will be assumed. If the given `rid` is different from the one of last server reply, `full_update` will be `true` (see the server reply details for more info)"
+        example: /api/v2/sync/maindata?rid=14
+    required: true
+  responses:
+    "200":
+      description: All scenarios- see JSON below
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/sync/MainData.yaml"
+          example: |
+            {
+              "rid":15,
+              "torrents":
+              {
+                "8c212779b4abde7c6bc608063a0d008b7e40ce32":
+                {
+                    "state":"pausedUP"
+                }
+              }
+            }
+  security:
+    - sid: []

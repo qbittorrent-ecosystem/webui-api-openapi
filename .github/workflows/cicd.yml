@@ -41,7 +41,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
 
           git add .
-          git commit -m "bundled new spec"
+          git commit -m "bundled new spec" || true
       - name: Push bundled openapi spec
         if: github.event_name != 'pull_request'
         uses: ad-m/github-push-action@master
@@ -87,7 +87,7 @@ jobs:
 
           git add specs
           git add index.html
-          git commit -m "add new spec and set as default"
+          git commit -m "add new spec and set as default" || true
       - name: Push bundled openapi spec
         uses: ad-m/github-push-action@master
         with:

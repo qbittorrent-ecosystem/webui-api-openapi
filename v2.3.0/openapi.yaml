@@ -132,6 +132,16 @@ paths:
     $ref: "./paths/torrents/editCategory.yaml"
   /torrents/removeCategories:
     $ref: "./paths/torrents/removeCategories.yaml"
+  /torrents/addTags:
+    $ref: "./paths/torrents/addTags.yaml"
+  /torrents/removeTags:
+    $ref: "./paths/torrents/removeTags.yaml"
+  /torrents/tags:
+    $ref: "./paths/torrents/tags.yaml"
+  /torrents/createTags:
+    $ref: "./paths/torrents/createTags.yaml"
+  /torrents/deleteTags:
+    $ref: "./paths/torrents/deleteTags.yaml"
   /torrents/setAutoManagement:
     $ref: "./paths/torrents/setAutoManagement.yaml"
   /torrents/toggleSequentialDownload:
@@ -227,6 +237,8 @@ components:
       $ref: "./schemas/torrents/SetTorrentsLimit.yaml"
     Category:
       $ref: "./schemas/torrents/Category.yaml"
+    TorrentsTags:
+      $ref: "./schemas/torrents/TorrentsTags.yaml"
     SetTorrentsValue:
       $ref: "./schemas/torrents/SetTorrentsValue.yaml"
     RssRuleDef:

@@ -1,0 +1,34 @@
+post:
+  tags:
+    - log
+  summary: Get peer log
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-peer-log"
+    description: WebUI-API on qBittorrent wiki
+  operationId: logPeersPost
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            last_known_id:
+              type: integer
+              format: int64
+              description: 'Exclude messages with "message id" <= `last_known_id` (default: `-1`)'
+              default: -1
+          required:
+            - last_known_id
+    required: true
+  responses:
+    "200":
+      description: All scenarios- see JSON below
+      content:
+        application/json:
+          schema:
+            type: array
+            description: The response a JSON array. Each element of the array of objects (each object is the information relative to a peer) containing the following fields
+            items:
+              $ref: "../../schemas/log/PeersLog.yaml"
+  security:
+    - sid: []

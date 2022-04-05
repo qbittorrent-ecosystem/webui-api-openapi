@@ -1,0 +1,19 @@
+get:
+  tags:
+    - transfer
+  summary: Get global download limit
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-global-download-limit"
+    description: WebUI-API on qBittorrent wiki
+  operationId: transferDownloadLimitGet
+  responses:
+    "200":
+      description: All scenarios
+      content:
+        text/plain:
+          schema:
+            type: integer
+            format: int64
+            description: The response is the value of current global download speed limit in bytes/second; this value will be zero if no limit is applied.
+  security:
+    - sid: []

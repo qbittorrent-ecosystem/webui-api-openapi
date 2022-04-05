@@ -165,6 +165,8 @@ paths:
     $ref: "./paths/rss/moveItem.yaml"
   /rss/items:
     $ref: "./paths/rss/items.yaml"
+  /rss/markAsRead:
+    $ref: "./paths/rss/markAsRead.yaml"
   /rss/refreshItem:
     $ref: "./paths/rss/refreshItem.yaml"
   /rss/setRule:
@@ -175,6 +177,8 @@ paths:
     $ref: "./paths/rss/removeRule.yaml"
   /rss/rules:
     $ref: "./paths/rss/rules.yaml"
+  /rss/matchingArticles:
+    $ref: "./paths/rss/matchingArticles.yaml"
 
   /search/start:
     $ref: "./paths/search/start.yaml"

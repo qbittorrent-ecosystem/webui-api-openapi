@@ -10,7 +10,7 @@ info:
   license:
     name: GNU GPLv2
     url: "https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html"
-  version: 2.0.1
+  version: 2.0.2
 
 servers:
   - url: http://localhost:8080/api/v2

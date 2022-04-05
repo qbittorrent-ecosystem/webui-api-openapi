@@ -182,6 +182,13 @@ properties:
     type: integer
     format: int64
     description: Maximum number of upload slots per torrent
+  stop_tracker_timeout:
+    type: integer
+    format: int64
+    description: Timeout in seconds for a `stopped` announce request to trackers
+  enable_piece_extent_affinity:
+    type: boolean
+    description: True if the advanced libtorrent option `piece_extent_affinity` is enabled
   bittorrent_protocol:
     type: integer
     format: int32
@@ -371,6 +378,17 @@ properties:
   web_ui_clickjacking_protection_enabled:
     type: boolean
     description: True if WebUI clickjacking protection is enabled
+  web_ui_secure_cookie_enabled:
+    type: boolean
+    description: True if WebUI cookie `Secure` flag is enabled
+  web_ui_max_auth_fail_count:
+    type: integer
+    format: int64
+    description: Maximum number of authentication failures before WebUI access ban
+  web_ui_ban_duration:
+    type: integer
+    format: int64
+    description: WebUI access ban duration in seconds
   web_ui_session_timeout:
     type: integer
     format: int64

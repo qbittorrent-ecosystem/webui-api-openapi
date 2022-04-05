@@ -152,6 +152,8 @@ paths:
     $ref: "./paths/torrents/setForceStart.yaml"
   /torrents/setSuperSeeding:
     $ref: "./paths/torrents/setSuperSeeding.yaml"
+  /torrents/renameFile:
+    $ref: "./paths/torrents/renameFile.yaml"
 
   /rss/addFolder:
     $ref: "./paths/rss/addFolder.yaml"
@@ -241,6 +243,8 @@ components:
       $ref: "./schemas/torrents/TorrentsTags.yaml"
     SetTorrentsValue:
       $ref: "./schemas/torrents/SetTorrentsValue.yaml"
+    RenameTorrentFiles:
+      $ref: "./schemas/torrents/RenameTorrentFiles.yaml"
     RssRuleDef:
       $ref: "./schemas/rss/RssRuleDef.yaml"
   securitySchemes:

@@ -531,9 +531,6 @@ properties:
   enable_os_cache:
     type: boolean
     description: True enables os cache
-  enable_super_seeding:
-    type: boolean
-    description: Strict super seeding
   enable_upload_suggestions:
     type: boolean
     description: True enables sending of upload piece suggestions

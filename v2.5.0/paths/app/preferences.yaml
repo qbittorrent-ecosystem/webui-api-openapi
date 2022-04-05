@@ -58,7 +58,6 @@ get:
                 "enable_multi_connections_from_same_ip": false,
                 "enable_os_cache": true,
                 "enable_piece_extent_affinity": false,
-                "enable_super_seeding": false,
                 "enable_upload_suggestions": false,
                 "encryption": 0,
                 "export_dir": "/home/user/Downloads/all",

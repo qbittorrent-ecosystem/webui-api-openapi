@@ -1,0 +1,21 @@
+type: object
+properties:
+  url:
+    type: string
+    description: Tracker url
+  status:
+    type: string
+    enum:
+      - Disabled
+      - Not contacted yet
+      - Working
+      - Updating...
+      - Not working
+    description: Tracker status
+  num_peers:
+    type: integer
+    format: int64
+    description: "Number of peers for current torrent, as reported by the tracker"
+  msg:
+    type: string
+    description: Tracker message (there is no way of knowing what this message is - it's up to tracker admins)

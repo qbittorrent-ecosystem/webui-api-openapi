@@ -1,0 +1,35 @@
+get:
+  tags:
+    - torrents
+  summary: Get all categories
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-all-categories"
+    description: WebUI-API on qBittorrent wiki
+  operationId: torrentsCategoriesGet
+  responses:
+    "200":
+      description: All scenarios
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+              properties:
+                name:
+                  type: string
+                savePath:
+                  type: string
+            example: |
+              {
+                  "Video": {
+                      "name": "Video",
+                      "savePath": "/home/user/torrents/video/"
+                  },
+                  "eBooks": {
+                      "name": "eBooks",
+                      "savePath": "/home/user/torrents/eBooks/"
+                  }
+              }
+  security:
+    - sid: []

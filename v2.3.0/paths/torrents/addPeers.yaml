@@ -1,0 +1,42 @@
+post:
+  tags:
+    - torrents
+  summary: Add peers
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#add-peers"
+    description: WebUI-API on qBittorrent wiki
+  operationId: torrentsAddPeersPost
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            hashes:
+              type: array
+              items:
+                type: string
+              description: "The hash of the torrent, or multiple hashes separated by a pipe `|`"
+            peers:
+              type: array
+              items:
+                type: string
+              description: "The peer to add, or multiple peers separated by a pipe `|`. Each peer is a colon-separated `host:port`"
+          required:
+            - hashes
+            - peers
+        encoding:
+          hashes:
+            style: pipeDelimited
+            explode: false
+          peers:
+            style: pipeDelimited
+            explode: false
+    required: true
+  responses:
+    "200":
+      description: All other scenarios
+    "400":
+      description: None of the supplied peers are valid
+  security:
+    - sid: []

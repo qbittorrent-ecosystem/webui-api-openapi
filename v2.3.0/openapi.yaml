@@ -61,6 +61,8 @@ paths:
     $ref: "./paths/transfer/uploadLimit.yaml"
   /transfer/setUploadLimit:
     $ref: "./paths/transfer/setUploadLimit.yaml"
+  /transfer/banPeers:
+    $ref: "./paths/transfer/banPeers.yaml"
 
   /torrents/info:
     $ref: "./paths/torrents/info.yaml"
@@ -94,6 +96,8 @@ paths:
     $ref: "./paths/torrents/editTracker.yaml"
   /torrents/removeTrackers:
     $ref: "./paths/torrents/removeTrackers.yaml"
+  /torrents/addPeers:
+    $ref: "./paths/torrents/addPeers.yaml"
   /torrents/increasePrio:
     $ref: "./paths/torrents/increasePrio.yaml"
   /torrents/decreasePrio:

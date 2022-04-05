@@ -88,6 +88,10 @@ paths:
     $ref: "./paths/torrents/add.yaml"
   /torrents/addTrackers:
     $ref: "./paths/torrents/addTrackers.yaml"
+  /torrents/editTracker:
+    $ref: "./paths/torrents/editTracker.yaml"
+  /torrents/removeTrackers:
+    $ref: "./paths/torrents/removeTrackers.yaml"
   /torrents/increasePrio:
     $ref: "./paths/torrents/increasePrio.yaml"
   /torrents/decreasePrio:

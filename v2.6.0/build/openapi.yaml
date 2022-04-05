@@ -9,7 +9,7 @@ info:
   license:
     name: GNU GPLv2
     url: 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html'
-  version: 2.5.1
+  version: 2.6.0
 servers:
   - url: 'http://localhost:8080/api/v2'
     description: qBittorrent Web UI API
@@ -3507,32 +3507,6 @@ paths:
           description: Search job was not found
       security:
         - sid: []
-  /search/categories:
-    get:
-      tags:
-        - search
-      summary: Search categories
-      operationId: searchCategoriesGet
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: Selected plugin
-      responses:
-        '200':
-          description: All scenarios
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-      security:
-        - sid: []
   /search/plugins:
     get:
       tags:
@@ -3566,7 +3540,12 @@ paths:
                       type: array
                       description: List of category objects
                       items:
-                        type: string
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          name:
+                            type: string
                     url:
                       type: string
                       description: URL of the torrent site

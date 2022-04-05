@@ -20,9 +20,11 @@ post:
               type: string
               description: The hash of the torrent
             id:
-              type: integer
-              format: int64
-              description: File id
+              type: array
+              items:
+                type: integer
+                format: int64
+              description: "File ids, separated by `|`"
             priority:
               type: integer
               format: int32

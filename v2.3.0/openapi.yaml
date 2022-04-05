@@ -26,6 +26,8 @@ paths:
     $ref: "./paths/app/version.yaml"
   /app/webapiVersion:
     $ref: "./paths/app/webapiVersion.yaml"
+  /app/buildInfo:
+    $ref: "./paths/app/buildInfo.yaml"
   /app/shutdown:
     $ref: "./paths/app/shutdown.yaml"
   /app/preferences:
@@ -183,6 +185,8 @@ paths:
 
 components:
   schemas:
+    BuildInfo:
+      $ref: "./schemas/app/BuildInfo.yaml"
     Preferences:
       $ref: "./schemas/app/Preferences.yaml"
     MainLog:

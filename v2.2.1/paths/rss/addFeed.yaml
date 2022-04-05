@@ -1,0 +1,30 @@
+post:
+  tags:
+    - rss
+  summary: Add feed
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#add-feed"
+    description: WebUI-API on qBittorrent wiki
+  operationId: rssAddFeedPost
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            url:
+              type: string
+              description: 'URL of RSS feed (e.g. "http://thepiratebay.org/rss//top100/200")'
+            path:
+              type: string
+              description: Full path of added folder (e.g. "The Pirate Bay\Top100\Video")
+          required:
+            - url
+    required: true
+  responses:
+    "200":
+      description: All other scenarios
+    "409":
+      description: Failure to add feed
+  security:
+    - sid: []

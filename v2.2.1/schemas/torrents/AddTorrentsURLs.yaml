@@ -1,0 +1,9 @@
+allOf:
+  - type: object
+    properties:
+      urls:
+        type: string
+        description: URLs separated with newlines
+  - $ref: "./AddTorrentsCommon.yaml"
+required:
+  - urls

@@ -1,0 +1,38 @@
+post:
+  tags:
+    - app
+  summary: Set application preferences
+  description: |
+    Notes:
+    1. There is no need to pass all possible preferences' `token:value` pairs if you only want to change one option
+    2. Paths in `scan_dirs` must exist, otherwise this option will have no effect
+    3. String values must be quoted; integer and boolean values must never be quoted
+
+    For a list of possible preference options see [Get application preferences](https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-application-preferences)
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#set-application-preferences"
+    description: WebUI-API on qBittorrent wiki
+  operationId: appSetPreferencesPost
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            json:
+              type: string
+              description: A json object with key-value pairs of the settings you want to change and their new values.
+              allOf:
+                - $ref: "../../schemas/app/Preferences.yaml"
+              example: '{"save_path":"C:/Users/Dayman/Downloads","queueing_enabled":false,"scan_dirs":{"C:/Games": 0,"D:/Downloads": 1}}'
+          required:
+            - json
+        encoding:
+          json:
+            contentType: application/json
+    required: true
+  responses:
+    "200":
+      description: All scenarios
+  security:
+    - sid: []

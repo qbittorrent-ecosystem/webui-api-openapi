@@ -1,0 +1,38 @@
+post:
+  tags:
+    - torrents
+  summary: Edit category
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#edit-category"
+    description: WebUI-API on qBittorrent wiki
+  operationId: torrentsEditCategoryPost
+  requestBody:
+    description: |
+      ```
+      POST /api/v2/torrents/editCategory HTTP/1.1
+      User-Agent: Fiddler
+      Host: 127.0.0.1
+      Cookie: SID=your_sid
+      Content-Type: application/x-www-form-urlencoded
+      Content-Length: length
+
+      category=CategoryName&savePath=/path/to/save/torrents/to
+      ```
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          allOf:
+            - $ref: "../../schemas/torrents/Category.yaml"
+        example:
+          category: CategoryName
+          savePath: /path/to/save/torrents/to
+    required: true
+  responses:
+    "200":
+      description: All other scenarios
+    "400":
+      description: Category name is empty
+    "409":
+      description: Category editing failed
+  security:
+    - sid: []

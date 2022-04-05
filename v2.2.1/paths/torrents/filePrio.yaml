@@ -1,0 +1,56 @@
+post:
+  tags:
+    - torrents
+  summary: Set file priority
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#set-file-priority"
+    description: WebUI-API on qBittorrent wiki
+  operationId: torrentsFilePrioPost
+  requestBody:
+    description: |
+      `id` values correspond to file position inside the array returned by [torrent contents API](https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-contents), e.g. `id=0` for first file, `id=1` for second file, etc.
+
+      Since 2.8.2 it is reccomended to use `index` field returned by [torrent contents API](https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-contents) (since the files can be filtered and the `index` value may differ from the position inside the response array).
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            hash:
+              type: string
+              description: The hash of the torrent
+            id:
+              type: array
+              items:
+                type: integer
+                format: int64
+              description: "File ids, separated by `|`"
+            priority:
+              type: integer
+              format: int32
+              enum:
+                - 0
+                - 1
+                - 6
+                - 7
+              description: "File priority to set (consult [torrent contents API](https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-contents) for possible values)"
+          required:
+            - hash
+            - id
+            - priority
+        encoding:
+          id:
+            style: pipeDelimited
+            explode: false
+    required: true
+  responses:
+    "200":
+      description: All other scenarios
+    "400":
+      description: Priority is invalid or At least one file `id` is not a valid integer
+    "404":
+      description: Torrent hash was not found
+    "409":
+      description: Torrent metadata hasn't downloaded yet or At least one file `id` was not found
+  security:
+    - sid: []

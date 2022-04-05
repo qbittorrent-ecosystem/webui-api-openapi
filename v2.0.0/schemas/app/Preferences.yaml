@@ -1,0 +1,557 @@
+type: object
+additionalProperties: true
+description: "Possible fields:"
+properties:
+  locale:
+    type: string
+    description: Currently selected language (e.g. en_GB for English)
+  save_path:
+    type: string
+    description: "Default save path for torrents, separated by slashes"
+  temp_path_enabled:
+    type: boolean
+    description: True if folder for incomplete torrents is enabled
+  temp_path:
+    type: string
+    description: "Path for incomplete torrents, separated by slashes"
+  scan_dirs:
+    type: object
+    additionalProperties:
+      oneOf:
+        - type: integer
+          enum:
+            - 0
+            - 1
+        - type: string
+    description: |
+      Property: directory to watch for torrent files, value: where torrents loaded from this directory should be downloaded to (see list of possible values below). Slashes are used as path separators; multiple key/value pairs can be specified
+
+      | Value                  | Description                       |
+      | ---------------------- | --------------------------------- |
+      | 0                      | Download to the monitored folder  |
+      | 1                      | Download to the default save path |
+      | "/path/to/download/to" | Download to this path             |
+  export_dir:
+    type: string
+    description: Path to directory to copy .torrent files to. Slashes are used as path separators
+  export_dir_fin:
+    type: string
+    description: Path to directory to copy .torrent files of completed downloads to. Slashes are used as path separators
+  mail_notification_enabled:
+    type: boolean
+    description: True if e-mail notification should be enabled
+  mail_notification_email:
+    type: string
+    description: e-mail to send notifications to
+  mail_notification_smtp:
+    type: string
+    description: smtp server for e-mail notifications
+  mail_notification_ssl_enabled:
+    type: boolean
+    description: True if smtp server requires SSL connection
+  mail_notification_auth_enabled:
+    type: boolean
+    description: True if smtp server requires authentication
+  mail_notification_username:
+    type: string
+    description: Username for smtp authentication
+  mail_notification_password:
+    type: string
+    format: password
+    description: Password for smtp authentication
+  autorun_enabled:
+    type: boolean
+    description: True if external program should be run after torrent has finished downloading
+  autorun_program:
+    type: string
+    description: "Program path/name/arguments to run if `autorun_enabled` is enabled; path is separated by slashes; you can use `%f` and `%n` arguments, which will be expanded by qBittorent as path_to_torrent_file and torrent_name (from the GUI; not the .torrent file name) respectively"
+  queueing_enabled:
+    type: boolean
+    description: True if torrent queuing is enabled
+  max_active_downloads:
+    type: integer
+    format: int64
+    description: Maximum number of active simultaneous downloads
+  max_active_torrents:
+    type: integer
+    format: int64
+    description: Maximum number of active simultaneous downloads and uploads
+  max_active_uploads:
+    type: integer
+    format: int64
+    description: Maximum number of active simultaneous uploads
+  dont_count_slow_torrents:
+    type: boolean
+    description: "If true torrents w/o any activity (stalled ones) will not be counted towards `max_active_*` limits; see [dont_count_slow_torrents](https://www.libtorrent.org/reference-Settings.html#dont_count_slow_torrents) for more information"
+    externalDocs:
+      url: "https://www.libtorrent.org/reference-Settings.html#dont_count_slow_torrents"
+      description: libtorrent settings reference
+  max_ratio_enabled:
+    type: boolean
+    description: True if share ratio limit is enabled
+  max_ratio:
+    type: number
+    format: float
+    description: Get the global share ratio limit
+  max_ratio_act:
+    type: integer
+    format: int64
+    enum:
+      - 0
+      - 1
+    description: |
+      Action performed when a torrent reaches the maximum share ratio. See list of possible values here below.
+
+      | Value | Description    |
+      | ----- | -------------- |
+      | 0     | Pause torrent  |
+      | 1     | Remove torrent |
+  listen_port:
+    type: integer
+    format: int32
+    description: Port for incoming connections
+  upnp:
+    type: boolean
+    description: True if UPnP/NAT-PMP is enabled
+  random_port:
+    type: boolean
+    description: True if the port is randomly selected
+  dl_limit:
+    type: integer
+    format: int64
+    description: Global download speed limit in KiB/s; `-1` means no limit is applied
+  up_limit:
+    type: integer
+    format: int64
+    description: Global upload speed limit in KiB/s; `-1` means no limit is applied
+  max_connec:
+    type: integer
+    format: int64
+    description: Maximum global number of simultaneous connections
+  max_connec_per_torrent:
+    type: integer
+    format: int64
+    description: Maximum number of simultaneous connections per torrent
+  max_uploads:
+    type: integer
+    format: int64
+    description: Maximum number of upload slots
+  max_uploads_per_torrent:
+    type: integer
+    format: int64
+    description: Maximum number of upload slots per torrent
+  bittorrent_protocol:
+    type: integer
+    format: int32
+    enum:
+      - 0
+      - 1
+      - 2
+    description: |
+      Bittorrent Protocol to use (see list of possible values below)
+
+      | Value | Description |
+      | ----- | ----------- |
+      | 0     | TCP and μTP |
+      | 1     | TCP         |
+      | 2     | μTP         |
+  limit_utp_rate:
+    type: boolean
+    description: "True if `[du]l_limit` should be applied to uTP connections; this option is only available in qBittorent built against libtorrent version 0.16.X and higher"
+  limit_tcp_overhead:
+    type: boolean
+    description: "True if `[du]l_limit` should be applied to estimated TCP overhead (service data: e.g. packet headers)"
+  alt_dl_limit:
+    type: integer
+    format: int64
+    description: Alternative global download speed limit in KiB/s
+  alt_up_limit:
+    type: integer
+    format: int64
+    description: Alternative global upload speed limit in KiB/s
+  scheduler_enabled:
+    type: boolean
+    description: True if alternative limits should be applied according to schedule
+  schedule_from_hour:
+    type: integer
+    format: int32
+    description: Scheduler starting hour
+  schedule_from_min:
+    type: integer
+    format: int32
+    description: Scheduler starting minute
+  schedule_to_hour:
+    type: integer
+    format: int32
+    description: Scheduler ending hour
+  schedule_to_min:
+    type: integer
+    format: int32
+    description: Scheduler ending minute
+  scheduler_days:
+    type: integer
+    format: int32
+    enum:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+    description: |
+      Scheduler days. See possible values here below
+
+      | Value | Description     |
+      | ----- | --------------- |
+      | 0     | Every day       |
+      | 1     | Every weekday   |
+      | 2     | Every weekend   |
+      | 3     | Every Monday    |
+      | 4     | Every Tuesday   |
+      | 5     | Every Wednesday |
+      | 6     | Every Thursday  |
+      | 7     | Every Friday    |
+      | 8     | Every Saturday  |
+      | 9     | Every Sunday    |
+  dht:
+    type: boolean
+    description: True if DHT is enabled
+  pex:
+    type: boolean
+    description: True if PeX is enabled
+  lsd:
+    type: boolean
+    description: True if LSD is enabled
+  encryption:
+    type: integer
+    format: int32
+    enum:
+      - 0
+      - 1
+      - 2
+    description: |
+      See list of possible values here below
+
+      | Value | Description          |
+      | ----- | -------------------- |
+      | 0     | Prefer encryption    |
+      | 1     | Force encryption on  |
+      | 2     | Force encryption off |
+  anonymous_mode:
+    type: boolean
+    description: "If true anonymous mode will be enabled; read more [here](https://github.com/qbittorrent/qBittorrent/wiki/Anonymous-Mode); this option is only available in qBittorent built against libtorrent version 0.16.X and higher"
+    externalDocs:
+      url: "https://github.com/qbittorrent/qBittorrent/wiki/Anonymous-Mode"
+      description: qBittorrent wiki
+  proxy_type:
+    type: integer
+    format: int32
+    enum:
+      - -1
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    description: |
+      See list of possible values here below
+
+      | Value | Description                         |
+      | ----- | ----------------------------------- |
+      | -1    | Proxy is disabled                   |
+      | 0     | Prefer encryption                   |
+      | 1     | HTTP proxy without authentication   |
+      | 2     | SOCKS5 proxy without authentication |
+      | 3     | HTTP proxy with authentication      |
+      | 4     | SOCKS5 proxy with authentication    |
+      | 5     | SOCKS4 proxy without authentication |
+  proxy_ip:
+    type: string
+    description: Proxy IP address or domain name
+  proxy_port:
+    type: integer
+    format: int32
+    description: Proxy port
+  proxy_peer_connections:
+    type: boolean
+    description: True if peer and web seed connections should be proxified; this option will have any effect only in qBittorent built against libtorrent version 0.16.X and higher
+  proxy_auth_enabled:
+    type: boolean
+    description: True proxy requires authentication; doesn't apply to SOCKS4 proxies
+  proxy_username:
+    type: string
+    description: Username for proxy authentication
+  proxy_password:
+    type: string
+    format: password
+    description: Password for proxy authentication
+  proxy_torrents_only:
+    type: boolean
+    description: True if proxy is only used for torrents
+  ip_filter_enabled:
+    type: boolean
+    description: True if external IP filter should be enabled
+  ip_filter_path:
+    type: string
+    description: "Path to IP filter file (.dat, .p2p, .p2b files are supported); path is separated by slashes"
+  ip_filter_trackers:
+    type: boolean
+    description: True if IP filters are applied to trackers
+  web_ui_domain_list:
+    type: array
+    items:
+      type: string
+    description: Comma-separated list of domains to accept when performing Host header validation
+  web_ui_address:
+    type: string
+    description: IP address to use for the WebUI
+  web_ui_port:
+    type: integer
+    format: int32
+    description: WebUI port
+  web_ui_upnp:
+    type: boolean
+    description: True if UPnP is used for the WebUI port
+  web_ui_username:
+    type: string
+    description: WebUI username
+  web_ui_password:
+    type: string
+    format: password
+    description: "For API ≥ v2.3.0: Plaintext WebUI password, not readable, write-only. For API < v2.3.0: MD5 hash of WebUI password, hash is generated from the following string: `username:Web UI Access:plain_text_web_ui_password`"
+  web_ui_csrf_protection_enabled:
+    type: boolean
+    description: True if WebUI CSRF protection is enabled
+  web_ui_clickjacking_protection_enabled:
+    type: boolean
+    description: True if WebUI clickjacking protection is enabled
+  web_ui_session_timeout:
+    type: integer
+    format: int64
+    description: Seconds until WebUI is automatically signed off
+  web_ui_host_header_validation_enabled:
+    type: boolean
+    description: True if WebUI host header validation is enabled
+  bypass_local_auth:
+    type: boolean
+    description: True if authentication challenge for loopback address (127.0.0.1) should be disabled
+  bypass_auth_subnet_whitelist_enabled:
+    type: boolean
+    description: True if webui authentication should be bypassed for clients whose ip resides within (at least) one of the subnets on the whitelist
+  bypass_auth_subnet_whitelist:
+    type: array
+    items:
+      type: string
+    description: (White)list of ipv4/ipv6 subnets for which webui authentication should be bypassed; list entries are separated by commas
+  use_https:
+    type: boolean
+    description: True if WebUI HTTPS access is enabled
+  ssl_key:
+    type: string
+    description: "For API < v2.0.1: SSL keyfile contents (this is a not a path)"
+  ssl_cert:
+    type: string
+    description: "For API < v2.0.1: SSL certificate contents (this is a not a path)"
+  web_ui_https_key_path:
+    type: string
+    description: "For API ≥ v2.0.1: Path to SSL keyfile"
+  web_ui_https_cert_path:
+    type: string
+    description: "For API ≥ v2.0.1: Path to SSL certificate"
+  dyndns_enabled:
+    type: boolean
+    description: True if server DNS should be updated dynamically
+  dyndns_service:
+    type: integer
+    format: int32
+    enum:
+      - 0
+      - 1
+    description: |
+      See list of possible values here below
+
+      | Value | Description |
+      | ----- | ----------- |
+      | 0     | Use DyDNS   |
+      | 1     | Use NOIP    |
+  dyndns_username:
+    type: string
+    description: Username for DDNS service
+  dyndns_password:
+    type: string
+    format: password
+    description: Password for DDNS service
+  dyndns_domain:
+    type: string
+    description: Your DDNS domain name
+  rss_refresh_interval:
+    type: integer
+    format: int64
+    description: RSS refresh interval
+  rss_max_articles_per_feed:
+    type: integer
+    format: int64
+    description: Max stored articles per RSS feed
+  rss_processing_enabled:
+    type: boolean
+    description: Enable processing of RSS feeds
+  rss_auto_downloading_enabled:
+    type: boolean
+    description: Enable auto-downloading of torrents from the RSS feeds
+  add_trackers_enabled:
+    type: boolean
+    description: Enable automatic adding of trackers to new torrents
+  add_trackers:
+    type: string
+    description: List of trackers to add to new torrent
+  max_seeding_time_enabled:
+    type: boolean
+    description: True enables max seeding time
+  max_seeding_time:
+    type: integer
+    format: int64
+    description: Number of minutes to seed a torrent
+  announce_ip:
+    type: string
+    description: TODO
+  announce_to_all_tiers:
+    type: boolean
+    description: True always announce to all tiers
+  announce_to_all_trackers:
+    type: boolean
+    description: True always announce to all trackers in a tier
+  async_io_threads:
+    type: integer
+    format: int64
+    description: Number of asynchronous I/O threads
+  banned_IPs:
+    type: string
+    description: List of banned IPs
+  checking_memory_use:
+    type: integer
+    format: int64
+    description: Outstanding memory when checking torrents in MiB
+  current_interface_address:
+    type: string
+    description: IP Address to bind to. Empty String means All addresses
+  current_network_interface:
+    type: string
+    description: Network Interface used
+  disk_cache:
+    type: integer
+    format: int64
+    description: Disk cache used in MiB
+  disk_cache_ttl:
+    type: integer
+    format: int64
+    description: Disk cache expiry interval in seconds
+  embedded_tracker_port:
+    type: integer
+    format: int32
+    description: Port used for embedded tracker
+  enable_coalesce_read_write:
+    type: boolean
+    description: True enables coalesce reads & writes
+  enable_embedded_tracker:
+    type: boolean
+    description: True enables embedded tracker
+  enable_multi_connections_from_same_ip:
+    type: boolean
+    description: True allows multiple connections from the same IP address
+  enable_os_cache:
+    type: boolean
+    description: True enables os cache
+  enable_super_seeding:
+    type: boolean
+    description: Strict super seeding
+  enable_upload_suggestions:
+    type: boolean
+    description: True enables sending of upload piece suggestions
+  file_pool_size:
+    type: integer
+    format: int64
+    description: File pool size
+  outgoing_ports_max:
+    type: integer
+    format: int32
+    description: "Maximal outgoing port (0: Disabled)"
+  outgoing_ports_min:
+    type: integer
+    format: int32
+    description: "Minimal outgoing port (0: Disabled)"
+  recheck_completed_torrents:
+    type: boolean
+    description: True rechecks torrents on completion
+  resolve_peer_countries:
+    type: boolean
+    description: True resolves peer countries
+  save_resume_data_interval:
+    type: integer
+    format: int64
+    description: Save resume data interval in min
+  send_buffer_low_watermark:
+    type: integer
+    format: int64
+    description: Send buffer low watermark in KiB
+  send_buffer_watermark:
+    type: integer
+    format: int64
+    description: Send buffer watermark in KiB
+  send_buffer_watermark_factor:
+    type: integer
+    format: int32
+    description: Send buffer watermark factor in percent
+  socket_backlog_size:
+    type: integer
+    format: int64
+    description: Socket backlog size
+  upload_choking_algorithm:
+    type: integer
+    format: int32
+    enum:
+      - 0
+      - 1
+      - 2
+    description: |
+      Upload choking algorithm used (see list of possible values below)
+
+      | Value | Description    |
+      | ----- | -------------- |
+      | 0     | Round-robin    |
+      | 1     | Fastest upload |
+      | 2     | Anti-leech     |
+  upload_slots_behavior:
+    type: integer
+    format: int32
+    enum:
+      - 0
+      - 1
+    description: |
+      Upload slots behavior used (see list of possible values below)
+
+      | Value | Description       |
+      | ----- | ----------------- |
+      | 0     | Fixed slots       |
+      | 1     | Upload rate based |
+  upnp_lease_duration:
+    type: integer
+    format: int64
+    description: "UPnP lease duration (0: Permanent lease)"
+  utp_tcp_mixed_mode:
+    type: integer
+    format: int32
+    enum:
+      - 0
+      - 1
+    description: |
+      μTP-TCP mixed mode algorithm (see list of possible values below)
+
+      | Value | Description       |
+      | ----- | ----------------- |
+      | 0     | Prefer TCP        |
+      | 1     | Peer proportional |

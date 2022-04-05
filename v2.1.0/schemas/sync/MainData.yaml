@@ -19,9 +19,12 @@ properties:
       type: string
     description: List of hashes of torrents removed since last request
   categories:
-    type: array
-    items:
-      type: string
+    type: object
+    properties:
+      name:
+        type: string
+      savePath:
+        type: string
     description: Info for categories added since last request
   categories_removed:
     type: array

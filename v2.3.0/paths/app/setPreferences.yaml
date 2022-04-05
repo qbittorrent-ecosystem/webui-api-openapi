@@ -24,6 +24,12 @@ post:
               description: A json object with key-value pairs of the settings you want to change and their new values.
               allOf:
                 - $ref: "../../schemas/app/Preferences.yaml"
+                - type: object
+                  properties:
+                    web_ui_password:
+                      type: string
+                      format: password
+                      description: "For API ≥ v2.3.0: Plaintext WebUI password, not readable, write-only. For API < v2.3.0: MD5 hash of WebUI password, hash is generated from the following string: `username:Web UI Access:plain_text_web_ui_password`"
               example: '{"save_path":"C:/Users/Dayman/Downloads","queueing_enabled":false,"scan_dirs":{"C:/Games": 0,"D:/Downloads": 1}}'
           required:
             - json

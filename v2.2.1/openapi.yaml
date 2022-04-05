@@ -147,6 +147,8 @@ paths:
     $ref: "./paths/rss/moveItem.yaml"
   /rss/items:
     $ref: "./paths/rss/items.yaml"
+  /rss/refreshItem:
+    $ref: "./paths/rss/refreshItem.yaml"
   /rss/setRule:
     $ref: "./paths/rss/setRule.yaml"
   /rss/renameRule:

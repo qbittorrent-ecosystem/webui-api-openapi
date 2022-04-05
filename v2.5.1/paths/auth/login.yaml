@@ -1,0 +1,63 @@
+post:
+  tags:
+    - auth
+  summary: Login
+  description: |
+    Upon success, the response will contain a cookie with your SID. You must supply the cookie whenever you want to perform an operation that requires authentication.
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#login"
+    description: WebUI-API on qBittorrent wiki
+  operationId: authLoginPost
+  parameters:
+    - in: header
+      name: Referer
+      schema:
+        type: string
+    - in: header
+      name: Origin
+      schema:
+        type: string
+  requestBody:
+    description: |
+      Example showing how to login and execute a command that requires authentication using `curl`:
+
+      ```
+      $ curl -i --header 'Referer: http://localhost:8080' --data 'username=admin&password=adminadmin' http://localhost:8080/api/v2/auth/login
+      HTTP/1.1 200 OK
+      Content-Encoding:
+      Content-Length: 3
+      Content-Type: text/plain; charset=UTF-8
+      Set-Cookie: SID=hBc7TxF76ERhvIw0jQQ4LZ7Z1jQUV0tQ; path=/
+      $ curl http://localhost:8080/api/v2/torrents/info --cookie "SID=hBc7TxF76ERhvIw0jQQ4LZ7Z1jQUV0tQ"
+      ```
+
+      Note: Set `Referer` or `Origin` header to the exact same domain and port as used in the HTTP query `Host` header.
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            username:
+              type: string
+            password:
+              type: string
+              format: password
+          required:
+            - username
+            - password
+          example: username=admin&password=adminadmin
+    required: true
+  responses:
+    "200":
+      description: All other scenarios
+      headers:
+        Set-Cookie:
+          schema:
+            type: string
+            example: SID=hBc7TxF76ERhvIw0jQQ4LZ7Z1jQUV0tQ
+      content:
+        text/plain:
+          schema:
+            type: string
+    "403":
+      description: User's IP is banned for too many failed login attempts

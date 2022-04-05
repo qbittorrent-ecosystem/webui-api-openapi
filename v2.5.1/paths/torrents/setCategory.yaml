@@ -1,0 +1,54 @@
+post:
+  tags:
+    - torrents
+  summary: Set torrent category
+  description: "Requires knowing the torrent hash. You can get it from [torrent list](https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-list)."
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#set-torrent-category"
+    description: WebUI-API on qBittorrent wiki
+  operationId: torrentsSetCategoryPost
+  requestBody:
+    description: |
+      ```
+      POST /api/v2/torrents/setCategory HTTP/1.1
+      User-Agent: Fiddler
+      Host: 127.0.0.1
+      Cookie: SID=your_sid
+      Content-Type: application/x-www-form-urlencoded
+      Content-Length: length
+
+      hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32|284b83c9c7935002391129fd97f43db5d7cc2ba0&category=CategoryName
+      ```
+      `hashes` can contain multiple hashes separated by `|` or set to `all`
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          allOf:
+            - $ref: "../../schemas/torrents/Hashes.yaml"
+          properties:
+            category:
+              type: string
+              description: "`category` is the torrent category you want to set."
+              example: CategoryName
+          required:
+            - category
+          example:
+            hashes:
+              [
+                8c212779b4abde7c6bc608063a0d008b7e40ce32,
+                284b83c9c7935002391129fd97f43db5d7cc2ba0,
+              ]
+            category: CategoryName
+        encoding:
+          hashes:
+            style: pipeDelimited
+            explode: false
+    required: true
+  responses:
+    "200":
+      description: All other scenarios
+    "409":
+      description: Category name does not exist
+  security:
+    - sid: []

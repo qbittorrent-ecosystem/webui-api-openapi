@@ -23,8 +23,11 @@ post:
                 - active
                 - inactive
                 - resumed
+                - stalled
+                - stalled_uploading
+                - stalled_downloading
                 - errored
-              description: "Filter torrent list by state. Allowed state filters: `all`, `downloading`, `seeding`, `completed`, `paused`, `active`, `inactive`, `resumed`, `errored`"
+              description: "Filter torrent list by state. Allowed state filters: `all`, `downloading`, `seeding`, `completed`, `paused`, `active`, `inactive`, `resumed`, `stalled`, `stalled_uploading`, `stalled_downloading`, `errored`"
             category:
               type: string
               description: 'Get torrents with the given category (empty string means "without category"; no "category" parameter means "any category" <- broken until [#11748](https://github.com/qbittorrent/qBittorrent/issues/11748) is resolved). Remember to URL-encode the category name. For example, `My category` becomes `My%20category`'

@@ -46,7 +46,11 @@ post:
   responses:
     "200":
       description: All other scenarios
+    "400":
+      description: Priority is invalid or At least one file `id` is not a valid integer
     "404":
       description: Torrent hash was not found
+    "409":
+      description: Torrent metadata hasn't downloaded yet or At least one file `id` was not found
   security:
     - sid: []

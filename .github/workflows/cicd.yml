@@ -56,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: openapi
-          path: v2.*/build/openapi-*.yaml
+          path: v2.*/openapi.yaml
 
   push-to-pages:
     name: Push new openapi spec to Github Pages

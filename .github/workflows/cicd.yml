@@ -1,0 +1,92 @@
+name: CICD
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - .github/dependabot.yml
+      - v2.*/build/*
+      - README.md
+  pull_request:
+    paths-ignore:
+      - .github/dependabot.yml
+      - v2.*/build/*
+      - README.md
+
+concurrency: ${{ github.workflow }}
+
+jobs:
+  bundle:
+    name: Bundle
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Install dependencies
+        run: npm install
+      - name: Bundle
+        run: ./bundle.sh
+      - name: Commit bundled openapi spec
+        if: github.event_name != 'pull_request'
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          git add .
+          git commit -m "bundled new spec"
+      - name: Push bundled openapi spec
+        if: github.event_name != 'pull_request'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+      - name: Add version to filename
+        if: github.event_name != 'pull_request'
+        run: ./rename.sh
+      - name: Upload spec
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v3
+        with:
+          name: openapi
+          path: v2.*/build/openapi-*.yaml
+
+  push-to-pages:
+    name: Push new openapi spec to Github Pages
+    runs-on: ubuntu-20.04
+    needs: bundle
+    if: github.event_name != 'pull_request'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Delete old specs
+        run: rm -rf specs
+      - name: Download spec
+        uses: actions/download-artifact@v3
+        with:
+          name: openapi
+          path: specs
+      - name: Commit bundled openapi spec
+        if: github.event_name != 'pull_request'
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          git add specs
+          git commit -m "add new spec"
+      - name: Push bundled openapi spec
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages

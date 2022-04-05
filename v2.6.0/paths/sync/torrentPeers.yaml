@@ -1,0 +1,36 @@
+post:
+  tags:
+    - sync
+  summary: Get torrent peers data
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-peers-data"
+    description: WebUI-API on qBittorrent wiki
+  operationId: syncTorrentPeersPost
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            hash:
+              type: string
+              description: Torrent hash
+            rid:
+              type: integer
+              format: int64
+              description: "Response ID. If not provided, `rid=0` will be assumed. If the given `rid` is different from the one of last server reply, `full_update` will be `true` (see the server reply details for more info)"
+          required:
+            - hash
+        example: /api/v2/sync/torrentPeers?hash=8c212779b4abde7c6bc608063a0d008b7e40ce32?rid=14
+    required: true
+  responses:
+    "200":
+      description: All other scenarios- see JSON below
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/sync/TorrentPeers.yaml"
+    "404":
+      description: Torrent hash was not found
+  security:
+    - sid: []

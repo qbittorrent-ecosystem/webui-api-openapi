@@ -1,0 +1,14 @@
+type: object
+description: The response is a JSON object containing the following fields
+properties:
+  qt:
+    type: string
+  libtorrent:
+    type: string
+  boost:
+    type: string
+  openssl:
+    type: string
+  bitness:
+    type: integer
+    format: int32

@@ -42,6 +42,9 @@ properties:
     type: integer
     format: int64
     description: Set torrent download speed limit. Unit in bytes/second
+  autoTMM:
+    type: boolean
+    description: Whether Automatic Torrent Management should be used
   sequentialDownload:
     type: string
     enum:

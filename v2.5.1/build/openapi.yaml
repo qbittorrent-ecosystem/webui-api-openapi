@@ -9,7 +9,7 @@ info:
   license:
     name: GNU GPLv2
     url: 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html'
-  version: 2.5.0
+  version: 2.5.1
 servers:
   - url: 'http://localhost:8080/api/v2'
     description: qBittorrent Web UI API
@@ -277,9 +277,11 @@ paths:
                     "recheck_completed_torrents": false,
                     "resolve_peer_countries": true,
                     "rss_auto_downloading_enabled":true,
+                    "rss_download_repack_proper_episodes":true,
                     "rss_max_articles_per_feed":50,
                     "rss_processing_enabled":true,
                     "rss_refresh_interval":30,
+                    "rss_smart_episode_filters":"s(\\d+)e(\\d+)\n(\\d+)x(\\d+)\n(\\d{4}[.\\-]\\d{1,2}[.\\-]\\d{1,2})",
                     "save_path": "/home/user/Downloads/",
                     "save_path_changed_tmm_enabled": false,
                     "save_resume_data_interval": 60,
@@ -316,6 +318,7 @@ paths:
                     "web_ui_ban_duration": 3600,
                     "web_ui_clickjacking_protection_enabled": true,
                     "web_ui_csrf_protection_enabled": true,
+                    "web_ui_custom_http_headers": "",
                     "web_ui_domain_list": "*",
                     "web_ui_host_header_validation_enabled": true,
                     "web_ui_https_cert_path": "",
@@ -325,6 +328,7 @@ paths:
                     "web_ui_secure_cookie_enabled": true,
                     "web_ui_session_timeout": 3600,
                     "web_ui_upnp": false,
+                    "web_ui_use_custom_http_headers_enabled": false,
                     "web_ui_username": "admin"
                   }
       security:
@@ -2960,6 +2964,36 @@ paths:
                   }
       security:
         - sid: []
+  /rss/markAsRead:
+    post:
+      tags:
+        - rss
+      summary: Mark as read
+      description: If `articleId` is provided only the article is marked as read otherwise the whole feed is going to be marked as read.
+      externalDocs:
+        url: 'https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#mark-as-read'
+        description: WebUI-API on qBittorrent wiki
+      operationId: rssMarkAsReadPost
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                itemPath:
+                  type: string
+                  description: Current full path of item (e.g. "The Pirate Bay\Top100")
+                articleId:
+                  type: string
+                  description: ID of article
+              required:
+                - itemPath
+        required: true
+      responses:
+        '200':
+          description: All scenarios
+      security:
+        - sid: []
   /rss/refreshItem:
     post:
       tags:
@@ -3135,6 +3169,59 @@ paths:
                       "assignedCategory": "",
                       "savePath": "C:/Users/JohnDoe/Downloads/Punisher"
                     }
+                  }
+      security:
+        - sid: []
+  /rss/matchingArticles:
+    post:
+      tags:
+        - rss
+      summary: Get all articles matching a rule
+      externalDocs:
+        url: 'https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-all-articles-matching-a-rule'
+        description: WebUI-API on qBittorrent wiki
+      operationId: rssMatchingArticlesPost
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - ruleName
+              properties:
+                ruleName:
+                  type: string
+                  description: Rule name (e.g. "Linux")
+        required: true
+      responses:
+        '200':
+          description: All scenarios
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    type: string
+                description: 'Returns all articles that match a rule by feed name in JSON format, e.g.:'
+                example: |
+                  {
+                    "DistroWatch":[
+                        "sparkylinux-5.11-i686-minimalgui.iso.torrent",
+                        "sparkylinux-5.11-x86_64-minimalgui.iso.torrent",
+                        "sparkylinux-5.11-i686-xfce.iso.torrent",
+                        "bluestar-linux-5.6.3-2020.04.09-x86_64.iso.torrent",
+                        "robolinux64-mate3d-v10.10.iso.torrent",
+                    ],
+                    "Linuxtracker":[
+                        "[Alpine Linux] alpine-extended-3.11.6",
+                        "[Alpine Linux] alpine-standard-3.11.6",
+                        "[Linuxfx] linuxfx10-wxs-lts-beta5.iso",
+                        "[Linux Lite] linux-lite-5.0-rc1-64bit.iso (MULTI)",
+                        "[Scientific Linux] SL-7.8-x86_64-Pack",
+                        "[NixOS] nixos-plasma5-20.03.1418.5272327b81e-x86_64-linux.iso"
+                    ]
                   }
       security:
         - sid: []
@@ -4122,12 +4209,24 @@ components:
         rss_auto_downloading_enabled:
           type: boolean
           description: Enable auto-downloading of torrents from the RSS feeds
+        rss_download_repack_proper_episodes:
+          type: boolean
+          description: 'For API ≥ v2.5.1: Enable downloading of repack/proper Episodes'
+        rss_smart_episode_filters:
+          type: string
+          description: 'For API ≥ v2.5.1: List of RSS Smart Episode Filters'
         add_trackers_enabled:
           type: boolean
           description: Enable automatic adding of trackers to new torrents
         add_trackers:
           type: string
           description: List of trackers to add to new torrent
+        web_ui_use_custom_http_headers_enabled:
+          type: boolean
+          description: 'For API ≥ v2.5.1: Enable custom http headers'
+        web_ui_custom_http_headers:
+          type: string
+          description: 'For API ≥ v2.5.1: List of custom http headers'
         max_seeding_time_enabled:
           type: boolean
           description: True enables max seeding time

@@ -9,7 +9,7 @@ info:
   license:
     name: GNU GPLv2
     url: 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html'
-  version: 2.4.0
+  version: 2.4.1
 servers:
   - url: 'http://localhost:8080/api/v2'
     description: qBittorrent Web UI API
@@ -224,6 +224,7 @@ paths:
                     "enable_embedded_tracker": false,
                     "enable_multi_connections_from_same_ip": false,
                     "enable_os_cache": true,
+                    "enable_piece_extent_affinity": false,
                     "enable_super_seeding": false,
                     "enable_upload_suggestions": false,
                     "encryption": 0,
@@ -302,6 +303,7 @@ paths:
                     "slow_torrent_ul_rate_threshold": 2,
                     "socket_backlog_size": 30,
                     "start_paused_enabled": false,
+                    "stop_tracker_timeout": 1,
                     "temp_path": "/home/user/Downloads/temp",
                     "temp_path_enabled": false,
                     "torrent_changed_tmm_enabled": true,
@@ -312,13 +314,16 @@ paths:
                     "use_https": false,
                     "utp_tcp_mixed_mode": 0,
                     "web_ui_address": "*",
+                    "web_ui_ban_duration": 3600,
                     "web_ui_clickjacking_protection_enabled": true,
                     "web_ui_csrf_protection_enabled": true,
                     "web_ui_domain_list": "*",
                     "web_ui_host_header_validation_enabled": true,
                     "web_ui_https_cert_path": "",
                     "web_ui_https_key_path": "",
+                    "web_ui_max_auth_fail_count": 5,
                     "web_ui_port": 8080,
+                    "web_ui_secure_cookie_enabled": true,
                     "web_ui_session_timeout": 3600,
                     "web_ui_upnp": false,
                     "web_ui_username": "admin"
@@ -863,8 +868,11 @@ paths:
                     - active
                     - inactive
                     - resumed
+                    - stalled
+                    - stalled_uploading
+                    - stalled_downloading
                     - errored
-                  description: 'Filter torrent list by state. Allowed state filters: `all`, `downloading`, `seeding`, `completed`, `paused`, `active`, `inactive`, `resumed`, `errored`'
+                  description: 'Filter torrent list by state. Allowed state filters: `all`, `downloading`, `seeding`, `completed`, `paused`, `active`, `inactive`, `resumed`, `stalled`, `stalled_uploading`, `stalled_downloading`, `errored`'
                 category:
                   type: string
                   description: 'Get torrents with the given category (empty string means "without category"; no "category" parameter means "any category" <- broken until [#11748](https://github.com/qbittorrent/qBittorrent/issues/11748) is resolved). Remember to URL-encode the category name. For example, `My category` becomes `My%20category`'
@@ -3829,6 +3837,13 @@ components:
           type: integer
           format: int64
           description: Maximum number of upload slots per torrent
+        stop_tracker_timeout:
+          type: integer
+          format: int64
+          description: Timeout in seconds for a `stopped` announce request to trackers
+        enable_piece_extent_affinity:
+          type: boolean
+          description: True if the advanced libtorrent option `piece_extent_affinity` is enabled
         bittorrent_protocol:
           type: integer
           format: int32
@@ -4018,6 +4033,17 @@ components:
         web_ui_clickjacking_protection_enabled:
           type: boolean
           description: True if WebUI clickjacking protection is enabled
+        web_ui_secure_cookie_enabled:
+          type: boolean
+          description: True if WebUI cookie `Secure` flag is enabled
+        web_ui_max_auth_fail_count:
+          type: integer
+          format: int64
+          description: Maximum number of authentication failures before WebUI access ban
+        web_ui_ban_duration:
+          type: integer
+          format: int64
+          description: WebUI access ban duration in seconds
         web_ui_session_timeout:
           type: integer
           format: int64

@@ -1,0 +1,22 @@
+get:
+  tags:
+    - transfer
+  summary: Get alternative speed limits state
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-alternative-speed-limits-state"
+    description: WebUI-API on qBittorrent wiki
+  operationId: transferSpeedLimitsModeGet
+  responses:
+    "200":
+      description: All scenarios
+      content:
+        text/plain:
+          schema:
+            type: integer
+            format: int32
+            enum:
+              - 0
+              - 1
+            description: "The response is `1` if alternative speed limits are enabled, `0` otherwise."
+  security:
+    - sid: []

@@ -82,6 +82,8 @@ paths:
     $ref: "./paths/torrents/delete.yaml"
   /torrents/recheck:
     $ref: "./paths/torrents/recheck.yaml"
+  /torrents/reannounce:
+    $ref: "./paths/torrents/reannounce.yaml"
   /torrents/add:
     $ref: "./paths/torrents/add.yaml"
   /torrents/addTrackers:

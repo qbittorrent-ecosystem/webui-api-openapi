@@ -1,0 +1,25 @@
+get:
+  tags:
+    - torrents
+  summary: Get all tags
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-all-tags"
+    description: WebUI-API on qBittorrent wiki
+  operationId: torrentsTagsGet
+  responses:
+    "200":
+      description: All scenarios
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: string
+            description: "Returns all tags in JSON format, e.g.:"
+            example: |
+              [
+                  "Tag 1",
+                  "Tag 2"
+              ]
+  security:
+    - sid: []

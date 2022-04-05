@@ -1,0 +1,42 @@
+post:
+  tags:
+    - torrents
+  summary: Get torrent pieces' hashes
+  description: "Requires knowing the torrent hash. You can get it from [torrent list](https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-list)."
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-pieces-hashes"
+    description: WebUI-API on qBittorrent wiki
+  operationId: torrentsPieceHashesPost
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - hash
+          properties:
+            hash:
+              type: string
+              description: The hash of the torrent you want to get the pieces' hashes of
+    required: true
+  responses:
+    "200":
+      description: All other scenarios- see JSON below
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: string
+            description: |
+              The response is:
+              - empty, if the torrent hash is invalid
+              - otherwise, an array of hashes (strings) of all pieces (in order) of a specific torrent.
+            example:
+              - 54eddd830a5b58480a6143d616a97e3a6c23c439
+              - f8a99d225aa4241db100f88407fc3bdaead583ab
+              - 928fb615b9bd4dd8f9e9022552c8f8f37ef76f58
+    "404":
+      description: Torrent hash was not found
+  security:
+    - sid: []

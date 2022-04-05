@@ -1,0 +1,19 @@
+get:
+  tags:
+    - app
+  summary: Get API version
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-api-version"
+    description: WebUI-API on qBittorrent wiki
+  operationId: appWebapiVersionGet
+  responses:
+    "200":
+      description: All scenarios
+      content:
+        text/plain:
+          schema:
+            type: string
+            description: "The response is a string with the WebAPI version, e.g. `2.0`"
+            example: "2.0"
+  security:
+    - sid: []

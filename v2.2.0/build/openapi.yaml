@@ -9,7 +9,7 @@ info:
   license:
     name: GNU GPLv2
     url: 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html'
-  version: 2.1.1
+  version: 2.2.0
 servers:
   - url: 'http://localhost:8080/api/v2'
     description: qBittorrent Web UI API
@@ -170,11 +170,15 @@ paths:
                     "add_trackers_enabled": false,
                     "alt_dl_limit": 10240,
                     "alt_up_limit": 10240,
+                    "alternative_webui_enabled": false,
+                    "alternative_webui_path": "/home/user/Documents/qbit-webui",
                     "announce_ip": "",
                     "announce_to_all_tiers": true,
                     "announce_to_all_trackers": false,
                     "anonymous_mode": false,
                     "async_io_threads": 4,
+                    "auto_delete_mode": 0,
+                    "auto_tmm_enabled": false,
                     "autorun_enabled": false,
                     "autorun_program": "",
                     "banned_IPs": "",
@@ -182,7 +186,9 @@ paths:
                     "bypass_auth_subnet_whitelist": "",
                     "bypass_auth_subnet_whitelist_enabled": false,
                     "bypass_local_auth": false,
+                    "category_changed_tmm_enabled": false,
                     "checking_memory_use": 32,
+                    "create_subfolder_enabled": true,
                     "current_interface_address": "",
                     "current_network_interface": "",
                     "dht": true,
@@ -206,9 +212,11 @@ paths:
                     "export_dir": "/home/user/Downloads/all",
                     "export_dir_fin": "/home/user/Downloads/completed",
                     "file_pool_size": 40,
+                    "incomplete_files_ext": false,
                     "ip_filter_enabled": false,
                     "ip_filter_path": "",
                     "ip_filter_trackers": false,
+                    "limit_lan_peers": true,
                     "limit_tcp_overhead": false,
                     "limit_utp_rate": true,
                     "listen_port": 58925,
@@ -218,6 +226,7 @@ paths:
                     "mail_notification_email": "",
                     "mail_notification_enabled": false,
                     "mail_notification_password": "",
+                    "mail_notification_sender": "qBittorrent_notification@example.com",
                     "mail_notification_smtp": "smtp.changeme.com",
                     "mail_notification_ssl_enabled": false,
                     "mail_notification_username": "",
@@ -236,6 +245,7 @@ paths:
                     "outgoing_ports_max": 0,
                     "outgoing_ports_min": 0,
                     "pex": true,
+                    "preallocate_all": false,
                     "proxy_auth_enabled": false,
                     "proxy_ip": "0.0.0.0",
                     "proxy_password": "",
@@ -253,6 +263,7 @@ paths:
                     "rss_processing_enabled":true,
                     "rss_refresh_interval":30,
                     "save_path": "/home/user/Downloads/",
+                    "save_path_changed_tmm_enabled": false,
                     "save_resume_data_interval": 60,
                     "scan_dirs":
                     {
@@ -268,9 +279,14 @@ paths:
                     "send_buffer_low_watermark": 10,
                     "send_buffer_watermark": 500,
                     "send_buffer_watermark_factor": 50,
+                    "slow_torrent_dl_rate_threshold": 2,
+                    "slow_torrent_inactive_timer": 60,
+                    "slow_torrent_ul_rate_threshold": 2,
                     "socket_backlog_size": 30,
+                    "start_paused_enabled": false,
                     "temp_path": "/home/user/Downloads/temp",
                     "temp_path_enabled": false,
+                    "torrent_changed_tmm_enabled": true,
                     "up_limit": 0,
                     "upload_choking_algorithm": 1,
                     "upload_slots_behavior": 0,
@@ -1471,6 +1487,86 @@ paths:
           description: Torrent hash was not found
       security:
         - sid: []
+  /torrents/editTracker:
+    post:
+      tags:
+        - torrents
+      summary: Edit trackers
+      externalDocs:
+        url: 'https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#edit-trackers'
+        description: WebUI-API on qBittorrent wiki
+      operationId: torrentsEditTrackerPost
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                hash:
+                  type: string
+                  description: The hash of the torrent
+                origUrl:
+                  type: string
+                  description: The tracker URL you want to edit
+                newUrl:
+                  type: string
+                  description: The new URL to replace the `origUrl`
+              required:
+                - hash
+                - origUrl
+                - newUrl
+        required: true
+      responses:
+        '200':
+          description: All other scenarios
+        '400':
+          description: '`newUrl` is not a valid URL'
+        '404':
+          description: Torrent hash was not found
+        '409':
+          description: '`newUrl` already exists for the torrent or `origUrl` was not found'
+      security:
+        - sid: []
+  /torrents/removeTrackers:
+    post:
+      tags:
+        - torrents
+      summary: Remove trackers
+      externalDocs:
+        url: 'https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#remove-trackers'
+        description: WebUI-API on qBittorrent wiki
+      operationId: torrentsRemoveTrackersPost
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                hash:
+                  type: string
+                  description: The hash of the torrent
+                urls:
+                  type: array
+                  items:
+                    type: string
+                  description: 'URLs to remove, separated by `|`'
+              required:
+                - hash
+                - urls
+            encoding:
+              urls:
+                style: pipeDelimited
+                explode: false
+        required: true
+      responses:
+        '200':
+          description: All other scenarios
+        '404':
+          description: Torrent hash was not found
+        '409':
+          description: All `urls` were not found
+      security:
+        - sid: []
   /torrents/increasePrio:
     post:
       tags:
@@ -1614,9 +1710,11 @@ paths:
                   type: string
                   description: The hash of the torrent
                 id:
-                  type: integer
-                  format: int64
-                  description: File id
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  description: 'File ids, separated by `|`'
                 priority:
                   type: integer
                   format: int32
@@ -1638,8 +1736,12 @@ paths:
       responses:
         '200':
           description: All other scenarios
+        '400':
+          description: Priority is invalid or At least one file `id` is not a valid integer
         '404':
           description: Torrent hash was not found
+        '409':
+          description: Torrent metadata hasn't downloaded yet or At least one file `id` was not found
       security:
         - sid: []
   /torrents/downloadLimit:
@@ -3185,6 +3287,33 @@ components:
         locale:
           type: string
           description: Currently selected language (e.g. en_GB for English)
+        create_subfolder_enabled:
+          type: boolean
+          description: True if a subfolder should be created when adding a torrent
+        start_paused_enabled:
+          type: boolean
+          description: True if torrents should be added in a Paused state
+        auto_delete_mode:
+          type: integer
+          description: TODO
+        preallocate_all:
+          type: boolean
+          description: True if disk space should be pre-allocated for all files
+        incomplete_files_ext:
+          type: boolean
+          description: True if ".!qB" should be appended to incomplete files
+        auto_tmm_enabled:
+          type: boolean
+          description: True if Automatic Torrent Management is enabled by default
+        torrent_changed_tmm_enabled:
+          type: boolean
+          description: True if torrent should be relocated when its Category changes
+        save_path_changed_tmm_enabled:
+          type: boolean
+          description: True if torrent should be relocated when the default save path changes
+        category_changed_tmm_enabled:
+          type: boolean
+          description: True if torrent should be relocated when its Category's save path changes
         save_path:
           type: string
           description: 'Default save path for torrents, separated by slashes'
@@ -3220,6 +3349,9 @@ components:
         mail_notification_enabled:
           type: boolean
           description: True if e-mail notification should be enabled
+        mail_notification_sender:
+          type: string
+          description: e-mail where notifications should originate from
         mail_notification_email:
           type: string
           description: e-mail to send notifications to
@@ -3266,6 +3398,18 @@ components:
           externalDocs:
             url: 'https://www.libtorrent.org/reference-Settings.html#dont_count_slow_torrents'
             description: libtorrent settings reference
+        slow_torrent_dl_rate_threshold:
+          type: integer
+          format: int64
+          description: Download rate in KiB/s for a torrent to be considered "slow"
+        slow_torrent_ul_rate_threshold:
+          type: integer
+          format: int64
+          description: Upload rate in KiB/s for a torrent to be considered "slow"
+        slow_torrent_inactive_timer:
+          type: integer
+          format: int64
+          description: Seconds a torrent should be inactive before considered "slow"
         max_ratio_enabled:
           type: boolean
           description: True if share ratio limit is enabled
@@ -3341,6 +3485,9 @@ components:
         limit_tcp_overhead:
           type: boolean
           description: 'True if `[du]l_limit` should be applied to estimated TCP overhead (service data: e.g. packet headers)'
+        limit_lan_peers:
+          type: boolean
+          description: 'True if `[du]l_limit` should be applied to peers on the LAN'
         alt_dl_limit:
           type: integer
           format: int64
@@ -3528,6 +3675,12 @@ components:
           items:
             type: string
           description: (White)list of ipv4/ipv6 subnets for which webui authentication should be bypassed; list entries are separated by commas
+        alternative_webui_enabled:
+          type: boolean
+          description: True if an alternative WebUI should be used
+        alternative_webui_path:
+          type: string
+          description: File path to the alternative WebUI
         use_https:
           type: boolean
           description: True if WebUI HTTPS access is enabled
@@ -4245,18 +4398,44 @@ components:
           type: string
           description: Tracker url
         status:
-          type: string
+          type: integer
+          format: int32
           enum:
-            - Disabled
-            - Not contacted yet
-            - Working
-            - Updating...
-            - Not working
-          description: Tracker status
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+          description: |
+            Tracker status. See the table below for possible values
+
+            | Value | Description                                                                        |
+            | ----- | ---------------------------------------------------------------------------------- |
+            | 0     | Tracker is disabled (used for DHT, PeX, and LSD)                                   |
+            | 1     | Tracker has not been contacted yet                                                 |
+            | 2     | Tracker has been contacted and is working                                          |
+            | 3     | Tracker is updating                                                                |
+            | 4     | Tracker has been contacted, but it is not working (or doesn't send proper replies) |
+        tier:
+          type: integer
+          format: int64
+          description: 'Tracker priority tier. Lower tier trackers are tried before higher tiers. Tier numbers are valid when `>= 0`, `< 0` is used as placeholder when `tier` does not exist for special entries (such as DHT).'
         num_peers:
           type: integer
           format: int64
           description: 'Number of peers for current torrent, as reported by the tracker'
+        num_seeds:
+          type: integer
+          format: int64
+          description: 'Number of seeds for current torrent, asreported by the tracker'
+        num_leeches:
+          type: integer
+          format: int64
+          description: 'Number of leeches for current torrent, as reported by the tracker'
+        num_downloaded:
+          type: integer
+          format: int64
+          description: 'Number of completed downlods for current torrent, as reported by the tracker'
         msg:
           type: string
           description: Tracker message (there is no way of knowing what this message is - it's up to tracker admins)
@@ -4392,6 +4571,9 @@ components:
           type: integer
           format: int64
           description: Set torrent download speed limit. Unit in bytes/second
+        autoTMM:
+          type: boolean
+          description: Whether Automatic Torrent Management should be used
         sequentialDownload:
           type: string
           enum:

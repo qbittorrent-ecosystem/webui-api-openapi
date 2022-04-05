@@ -1,0 +1,27 @@
+post:
+  tags:
+    - search
+  summary: Delete search
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#delete-search"
+    description: WebUI-API on qBittorrent wiki
+  operationId: searchDeletePost
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            id:
+              type: number
+              description: ID of the search job
+          required:
+            - id
+    required: true
+  responses:
+    "200":
+      description: All other scenarios
+    "404":
+      description: Search job was not found
+  security:
+    - sid: []

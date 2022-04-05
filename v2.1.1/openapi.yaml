@@ -152,6 +152,29 @@ paths:
   /rss/rules:
     $ref: "./paths/rss/rules.yaml"
 
+  /search/start:
+    $ref: "./paths/search/start.yaml"
+  /search/stop:
+    $ref: "./paths/search/stop.yaml"
+  /search/status:
+    $ref: "./paths/search/status.yaml"
+  /search/results:
+    $ref: "./paths/search/results.yaml"
+  /search/delete:
+    $ref: "./paths/search/delete.yaml"
+  /search/categories:
+    $ref: "./paths/search/categories.yaml"
+  /search/plugins:
+    $ref: "./paths/search/plugins.yaml"
+  /search/installPlugin:
+    $ref: "./paths/search/installPlugin.yaml"
+  /search/uninstallPlugin:
+    $ref: "./paths/search/uninstallPlugin.yaml"
+  /search/enablePlugin:
+    $ref: "./paths/search/enablePlugin.yaml"
+  /search/updatePlugins:
+    $ref: "./paths/search/updatePlugins.yaml"
+
 components:
   schemas:
     Preferences:
@@ -238,6 +261,11 @@ tags:
     description: 'All RSS API methods are under "rss", e.g.: `/api/v2/rss/methodName.`'
     externalDocs:
       url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#rss-experimental"
+      description: qBittorrent WebUI API documentation
+  - name: search
+    description: 'All Search API methods are under "search", e.g.: `/api/v2/search/methodName.`'
+    externalDocs:
+      url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#search"
       description: qBittorrent WebUI API documentation
 
 externalDocs:

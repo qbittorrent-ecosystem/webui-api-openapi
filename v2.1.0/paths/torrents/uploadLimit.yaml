@@ -1,0 +1,52 @@
+post:
+  tags:
+    - torrents
+  summary: Get torrent upload limit
+  description: "Requires knowing the torrent hash. You can get it from [torrent list](https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-list)."
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-upload-limit"
+    description: WebUI-API on qBittorrent wiki
+  operationId: torrentsUploadLimitPost
+  requestBody:
+    description: |
+      ```
+      POST /api/v2/torrents/uploadLimit HTTP/1.1
+      User-Agent: Fiddler
+      Host: 127.0.0.1
+      Cookie: SID=your_sid
+      Content-Type: application/x-www-form-urlencoded
+      Content-Length: length
+
+      hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32|284b83c9c7935002391129fd97f43db5d7cc2ba0
+      ```
+      `hashes` can contain multiple hashes separated by `|` or set to `all`
+
+      Server reply (example):
+      ```
+      HTTP/1.1 200 OK
+      content-type: application/json
+      content-length: length
+
+      {"8c212779b4abde7c6bc608063a0d008b7e40ce32":338944,"284b83c9c7935002391129fd97f43db5d7cc2ba0":123}
+      ```
+      `8c212779b4abde7c6bc608063a0d008b7e40ce32` is the hash of the torrent in the request and `338944` its upload speed limit in bytes per second; this value will be zero if no limit is applied.
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          allOf:
+            - $ref: "../../schemas/torrents/Hashes.yaml"
+          example: hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32|284b83c9c7935002391129fd97f43db5d7cc2ba0
+        encoding:
+          hashes:
+            style: pipeDelimited
+            explode: false
+    required: true
+  responses:
+    "200":
+      description: All scenarios
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/torrents/TorrentsLimit.yaml"
+  security:
+    - sid: []

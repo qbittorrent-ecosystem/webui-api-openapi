@@ -272,7 +272,7 @@ paths:
                     "scan_dirs":
                     {
                         "/home/user/Downloads/incoming/games": 0,
-                        "/home/user/Downloads/incoming/movies": 1,
+                        "/home/user/Downloads/incoming/movies": 1
                     },
                     "schedule_from_hour": 8,
                     "schedule_from_min": 0,

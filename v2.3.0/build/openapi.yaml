@@ -9,7 +9,7 @@ info:
   license:
     name: GNU GPLv2
     url: 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html'
-  version: 2.2.1
+  version: 2.3.0
 servers:
   - url: 'http://localhost:8080/api/v2'
     description: qBittorrent Web UI API
@@ -130,6 +130,24 @@ paths:
                 type: string
                 description: 'The response is a string with the WebAPI version, e.g. `2.0`'
                 example: '2.0'
+      security:
+        - sid: []
+  /app/buildInfo:
+    get:
+      tags:
+        - app
+      summary: Get build info
+      externalDocs:
+        url: 'https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-build-info'
+        description: WebUI-API on qBittorrent wiki
+      operationId: appBuildInfoGet
+      responses:
+        '200':
+          description: All scenarios- see JSON below
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildInfo'
       security:
         - sid: []
   /app/shutdown:
@@ -334,6 +352,12 @@ paths:
                   description: A json object with key-value pairs of the settings you want to change and their new values.
                   allOf:
                     - $ref: '#/components/schemas/Preferences'
+                    - type: object
+                      properties:
+                        web_ui_password:
+                          type: string
+                          format: password
+                          description: 'For API ≥ v2.3.0: Plaintext WebUI password, not readable, write-only. For API < v2.3.0: MD5 hash of WebUI password, hash is generated from the following string: `username:Web UI Access:plain_text_web_ui_password`'
                   example: '{"save_path":"C:/Users/Dayman/Downloads","queueing_enabled":false,"scan_dirs":{"C:/Games": 0,"D:/Downloads": 1}}'
               required:
                 - json
@@ -777,6 +801,36 @@ paths:
                   type: integer
                   format: int64
                   description: The global upload speed limit to set in bytes/second
+        required: true
+      responses:
+        '200':
+          description: All scenarios
+      security:
+        - sid: []
+  /transfer/banPeers:
+    post:
+      tags:
+        - transfer
+      summary: Ban peers
+      externalDocs:
+        url: 'https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#ban-peers'
+        description: WebUI-API on qBittorrent wiki
+      operationId: transferBanPeersPost
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                peers:
+                  type: array
+                  items:
+                    type: string
+                  description: 'The peer to ban, or multiple peers separated by a pipe `|`. Each peer is a colon-separated `host:port`'
+            encoding:
+              peers:
+                style: pipeDelimited
+                explode: false
         required: true
       responses:
         '200':
@@ -1567,6 +1621,49 @@ paths:
           description: All `urls` were not found
       security:
         - sid: []
+  /torrents/addPeers:
+    post:
+      tags:
+        - torrents
+      summary: Add peers
+      externalDocs:
+        url: 'https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#add-peers'
+        description: WebUI-API on qBittorrent wiki
+      operationId: torrentsAddPeersPost
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                hashes:
+                  type: array
+                  items:
+                    type: string
+                  description: 'The hash of the torrent, or multiple hashes separated by a pipe `|`'
+                peers:
+                  type: array
+                  items:
+                    type: string
+                  description: 'The peer to add, or multiple peers separated by a pipe `|`. Each peer is a colon-separated `host:port`'
+              required:
+                - hashes
+                - peers
+            encoding:
+              hashes:
+                style: pipeDelimited
+                explode: false
+              peers:
+                style: pipeDelimited
+                explode: false
+        required: true
+      responses:
+        '200':
+          description: All other scenarios
+        '400':
+          description: None of the supplied peers are valid
+      security:
+        - sid: []
   /torrents/increasePrio:
     post:
       tags:
@@ -2285,6 +2382,208 @@ paths:
                   example: Category1%0ACategory2
               required:
                 - categories
+        required: true
+      responses:
+        '200':
+          description: All scenarios
+      security:
+        - sid: []
+  /torrents/addTags:
+    post:
+      tags:
+        - torrents
+      summary: Add torrent tags
+      description: 'Requires knowing the torrent hash. You can get it from [torrent list](https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-list).'
+      externalDocs:
+        url: 'https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#add-torrent-tags'
+        description: WebUI-API on qBittorrent wiki
+      operationId: torrentsAddTagsPost
+      requestBody:
+        description: |
+          ```
+          POST /api/v2/torrents/addTags HTTP/1.1
+          User-Agent: Fiddler
+          Host: 127.0.0.1
+          Cookie: SID=your_sid
+          Content-Type: application/x-www-form-urlencoded
+          Content-Length: length
+
+          hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32|284b83c9c7935002391129fd97f43db5d7cc2ba0&tags=TagName1,TagName2
+          ```
+          `hashes` can contain multiple hashes separated by `|` or set to `all`
+
+          `tags` is the list of tags you want to add to passed torrents.
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TorrentsTags'
+            encoding:
+              hashes:
+                style: pipeDelimited
+                explode: false
+              tags:
+                style: form
+                explode: false
+        required: true
+      responses:
+        '200':
+          description: All scenarios
+      security:
+        - sid: []
+  /torrents/removeTags:
+    post:
+      tags:
+        - torrents
+      summary: Remove torrent tags
+      description: 'Requires knowing the torrent hash. You can get it from [torrent list](https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-list).'
+      externalDocs:
+        url: 'https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#remove-torrent-tags'
+        description: WebUI-API on qBittorrent wiki
+      operationId: torrentsRemoveTagsPost
+      requestBody:
+        description: |
+          ```
+          POST /api/v2/torrents/removeTags HTTP/1.1
+          User-Agent: Fiddler
+          Host: 127.0.0.1
+          Cookie: SID=your_sid
+          Content-Type: application/x-www-form-urlencoded
+          Content-Length: length
+
+          hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32|284b83c9c7935002391129fd97f43db5d7cc2ba0&tags=TagName1,TagName2
+          ```
+          `hashes` can contain multiple hashes separated by `|` or set to `all`
+
+          `tags` is the list of tags you want to remove from passed torrents. Empty list removes all tags from relevant torrents.
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TorrentsTags'
+            encoding:
+              hashes:
+                style: pipeDelimited
+                explode: false
+              tags:
+                style: form
+                explode: false
+        required: true
+      responses:
+        '200':
+          description: All scenarios
+      security:
+        - sid: []
+  /torrents/tags:
+    get:
+      tags:
+        - torrents
+      summary: Get all tags
+      externalDocs:
+        url: 'https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-all-tags'
+        description: WebUI-API on qBittorrent wiki
+      operationId: torrentsTagsGet
+      responses:
+        '200':
+          description: All scenarios
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                description: 'Returns all tags in JSON format, e.g.:'
+                example: |
+                  [
+                      "Tag 1",
+                      "Tag 2"
+                  ]
+      security:
+        - sid: []
+  /torrents/createTags:
+    post:
+      tags:
+        - torrents
+      summary: Create tags
+      externalDocs:
+        url: 'https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#create-tags'
+        description: WebUI-API on qBittorrent wiki
+      operationId: torrentsCreateTagsPost
+      requestBody:
+        description: |
+          ```
+          POST /api/v2/torrents/createTags HTTP/1.1
+          User-Agent: Fiddler
+          Host: 127.0.0.1
+          Cookie: SID=your_sid
+          Content-Type: application/x-www-form-urlencoded
+          Content-Length: length
+
+          tags=TagName1,TagName2
+          ```
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  description: '`tags` is a list of tags you want to create. Can contain multiple tags separated by `,`.'
+                  example:
+                    - TagName1
+                    - TagName2
+              required:
+                - tags
+            encoding:
+              tags:
+                style: form
+                explode: false
+        required: true
+      responses:
+        '200':
+          description: All scenarios
+      security:
+        - sid: []
+  /torrents/deleteTags:
+    post:
+      tags:
+        - torrents
+      summary: Delete tags
+      externalDocs:
+        url: 'https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#delete-tags'
+        description: WebUI-API on qBittorrent wiki
+      operationId: torrentsDeleteTagsPost
+      requestBody:
+        description: |
+          ```
+          POST /api/v2/torrents/deleteTags HTTP/1.1
+          User-Agent: Fiddler
+          Host: 127.0.0.1
+          Cookie: SID=your_sid
+          Content-Type: application/x-www-form-urlencoded
+          Content-Length: length
+
+          tags=TagName1,TagName2
+          ```
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  description: '`tags` is a list of tags you want to delete. Can contain multiple tags separated by `,`.'
+                  example:
+                    - TagName1
+                    - TagName2
+              required:
+                - tags
+            encoding:
+              tags:
+                style: form
+                explode: false
         required: true
       responses:
         '200':
@@ -3306,6 +3605,21 @@ paths:
         - sid: []
 components:
   schemas:
+    BuildInfo:
+      type: object
+      description: The response is a JSON object containing the following fields
+      properties:
+        qt:
+          type: string
+        libtorrent:
+          type: string
+        boost:
+          type: string
+        openssl:
+          type: string
+        bitness:
+          type: integer
+          format: int32
     Preferences:
       type: object
       additionalProperties: true
@@ -3674,10 +3988,6 @@ components:
         web_ui_username:
           type: string
           description: WebUI username
-        web_ui_password:
-          type: string
-          format: password
-          description: 'For API ≥ v2.3.0: Plaintext WebUI password, not readable, write-only. For API < v2.3.0: MD5 hash of WebUI password, hash is generated from the following string: `username:Web UI Access:plain_text_web_ui_password`'
         web_ui_csrf_protection_enabled:
           type: boolean
           description: True if WebUI CSRF protection is enabled
@@ -4650,6 +4960,27 @@ components:
       required:
         - category
         - savePath
+    TorrentsTags:
+      allOf:
+        - $ref: '#/components/schemas/Hashes'
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            type: string
+          example:
+            - TagName1
+            - TagName2
+      required:
+        - tags
+      example:
+        hashes:
+          - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+          - 284b83c9c7935002391129fd97f43db5d7cc2ba0
+        tags:
+          - TagName1
+          - TagName2
     SetTorrentsValue:
       type: object
       allOf:

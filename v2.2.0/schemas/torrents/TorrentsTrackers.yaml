@@ -4,14 +4,24 @@ properties:
     type: string
     description: Tracker url
   status:
-    type: string
+    type: integer
+    format: int32
     enum:
-      - Disabled
-      - Not contacted yet
-      - Working
-      - Updating...
-      - Not working
-    description: Tracker status
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+    description: |
+      Tracker status. See the table below for possible values
+
+      | Value | Description                                                                        |
+      | ----- | ---------------------------------------------------------------------------------- |
+      | 0     | Tracker is disabled (used for DHT, PeX, and LSD)                                   |
+      | 1     | Tracker has not been contacted yet                                                 |
+      | 2     | Tracker has been contacted and is working                                          |
+      | 3     | Tracker is updating                                                                |
+      | 4     | Tracker has been contacted, but it is not working (or doesn't send proper replies) |
   tier:
     type: integer
     format: int64

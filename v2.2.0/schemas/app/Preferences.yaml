@@ -5,6 +5,33 @@ properties:
   locale:
     type: string
     description: Currently selected language (e.g. en_GB for English)
+  create_subfolder_enabled:
+    type: boolean
+    description: True if a subfolder should be created when adding a torrent
+  start_paused_enabled:
+    type: boolean
+    description: True if torrents should be added in a Paused state
+  auto_delete_mode:
+    type: integer
+    description: TODO
+  preallocate_all:
+    type: boolean
+    description: True if disk space should be pre-allocated for all files
+  incomplete_files_ext:
+    type: boolean
+    description: True if ".!qB" should be appended to incomplete files
+  auto_tmm_enabled:
+    type: boolean
+    description: True if Automatic Torrent Management is enabled by default
+  torrent_changed_tmm_enabled:
+    type: boolean
+    description: True if torrent should be relocated when its Category changes
+  save_path_changed_tmm_enabled:
+    type: boolean
+    description: True if torrent should be relocated when the default save path changes
+  category_changed_tmm_enabled:
+    type: boolean
+    description: True if torrent should be relocated when its Category's save path changes
   save_path:
     type: string
     description: "Default save path for torrents, separated by slashes"
@@ -40,6 +67,9 @@ properties:
   mail_notification_enabled:
     type: boolean
     description: True if e-mail notification should be enabled
+  mail_notification_sender:
+    type: string
+    description: e-mail where notifications should originate from
   mail_notification_email:
     type: string
     description: e-mail to send notifications to
@@ -86,6 +116,18 @@ properties:
     externalDocs:
       url: "https://www.libtorrent.org/reference-Settings.html#dont_count_slow_torrents"
       description: libtorrent settings reference
+  slow_torrent_dl_rate_threshold:
+    type: integer
+    format: int64
+    description: Download rate in KiB/s for a torrent to be considered "slow"
+  slow_torrent_ul_rate_threshold:
+    type: integer
+    format: int64
+    description: Upload rate in KiB/s for a torrent to be considered "slow"
+  slow_torrent_inactive_timer:
+    type: integer
+    format: int64
+    description: Seconds a torrent should be inactive before considered "slow"
   max_ratio_enabled:
     type: boolean
     description: True if share ratio limit is enabled
@@ -161,6 +203,9 @@ properties:
   limit_tcp_overhead:
     type: boolean
     description: "True if `[du]l_limit` should be applied to estimated TCP overhead (service data: e.g. packet headers)"
+  limit_lan_peers:
+    type: boolean
+    description: "True if `[du]l_limit` should be applied to peers on the LAN"
   alt_dl_limit:
     type: integer
     format: int64
@@ -348,6 +393,12 @@ properties:
     items:
       type: string
     description: (White)list of ipv4/ipv6 subnets for which webui authentication should be bypassed; list entries are separated by commas
+  alternative_webui_enabled:
+    type: boolean
+    description: True if an alternative WebUI should be used
+  alternative_webui_path:
+    type: string
+    description: File path to the alternative WebUI
   use_https:
     type: boolean
     description: True if WebUI HTTPS access is enabled

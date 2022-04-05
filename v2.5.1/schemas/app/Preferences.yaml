@@ -468,12 +468,24 @@ properties:
   rss_auto_downloading_enabled:
     type: boolean
     description: Enable auto-downloading of torrents from the RSS feeds
+  rss_download_repack_proper_episodes:
+    type: boolean
+    description: "For API ≥ v2.5.1: Enable downloading of repack/proper Episodes"
+  rss_smart_episode_filters:
+    type: string
+    description: "For API ≥ v2.5.1: List of RSS Smart Episode Filters"
   add_trackers_enabled:
     type: boolean
     description: Enable automatic adding of trackers to new torrents
   add_trackers:
     type: string
     description: List of trackers to add to new torrent
+  web_ui_use_custom_http_headers_enabled:
+    type: boolean
+    description: "For API ≥ v2.5.1: Enable custom http headers"
+  web_ui_custom_http_headers:
+    type: string
+    description: "For API ≥ v2.5.1: List of custom http headers"
   max_seeding_time_enabled:
     type: boolean
     description: True enables max seeding time

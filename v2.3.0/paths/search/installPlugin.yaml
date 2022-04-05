@@ -1,0 +1,31 @@
+post:
+  tags:
+    - search
+  summary: Install search plugin
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#install-search-plugin"
+    description: WebUI-API on qBittorrent wiki
+  operationId: searchInstallPluginPost
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            sources:
+              type: array
+              items:
+                type: string
+              description: 'Url or file path of the plugin to install (e.g. "https://raw.githubusercontent.com/qbittorrent/search-plugins/master/nova3/engines/legittorrents.py"). Supports multiple sources separated by `|`'
+          required:
+            - sources
+        encoding:
+          sources:
+            style: pipeDelimited
+            explode: false
+    required: true
+  responses:
+    "200":
+      description: All scenarios
+  security:
+    - sid: []

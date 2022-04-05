@@ -1,0 +1,49 @@
+post:
+  tags:
+    - torrents
+  summary: Set automatic torrent management
+  description: "Requires knowing the torrent hash. You can get it from [torrent list](https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-list)."
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#set-automatic-torrent-management"
+    description: WebUI-API on qBittorrent wiki
+  operationId: torrentsSetAutoManagementPost
+  requestBody:
+    description: |
+      ```
+      POST /api/v2/torrents/setAutoManagement HTTP/1.1
+      User-Agent: Fiddler
+      Host: 127.0.0.1
+      Cookie: SID=your_sid
+      Content-Type: application/x-www-form-urlencoded
+      Content-Length: length
+
+      hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32|284b83c9c7935002391129fd97f43db5d7cc2ba0&enable=true
+      ```
+      `hashes` can contain multiple hashes separated by `|` or set to `all`
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          allOf:
+            - $ref: "../../schemas/torrents/Hashes.yaml"
+          properties:
+            enable:
+              type: boolean
+              default: false
+              description: "`enable` is a boolean, affects the torrents listed in `hashes`, default is `false`"
+              example: true
+          example:
+            hashes: 8c212779b4abde7c6bc608063a0d008b7e40ce32|284b83c9c7935002391129fd97f43db5d7cc2ba0
+            enable: true
+          required:
+            - enable
+        encoding:
+          hashes:
+            style: pipeDelimited
+            explode: false
+    required: true
+  responses:
+    "200":
+      description: All scenarios
+  security:
+    - sid: []

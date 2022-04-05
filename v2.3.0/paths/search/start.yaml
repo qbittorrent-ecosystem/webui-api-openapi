@@ -1,0 +1,69 @@
+post:
+  tags:
+    - search
+  summary: Start search
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#start-search"
+    description: WebUI-API on qBittorrent wiki
+  operationId: searchStartPost
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            pattern:
+              type: string
+              description: Pattern to search for (e.g. "Ubuntu 18.04")
+            plugins:
+              oneOf:
+                - type: string
+                  default: all
+                  enum:
+                    - all
+                - type: array
+                  items:
+                    type: string
+              description: Plugins to use for searching (e.g. "legittorrents"). Supports multiple plugins separated by `|`. Also supports `all` and `enabled`
+            category:
+              oneOf:
+                - type: string
+                  default: all
+                  enum:
+                    - all
+                - type: array
+                  items:
+                    type: string
+              description: Categories to limit your search to (e.g. "legittorrents"). Available categories depend on the specified `plugins`. Also supports `all`
+          required:
+            - pattern
+            - plugins
+            - category
+        encoding:
+          plugins:
+            style: pipeDelimited
+            explode: false
+          category:
+            style: pipeDelimited
+            explode: false
+    required: true
+  responses:
+    "200":
+      description: All other scenarios- see JSON below
+      content:
+        application/json:
+          schema:
+            type: object
+            description: The response is a JSON object with the following fields
+            properties:
+              id:
+                type: number
+                description: ID of the search job
+            example: |
+              {
+                "id": 12345
+              }
+    "409":
+      description: User has reached the limit of max `Running` searches (currently set to 5)
+  security:
+    - sid: []

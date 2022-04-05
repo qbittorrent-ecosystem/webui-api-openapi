@@ -9,7 +9,7 @@ info:
   license:
     name: GNU GPLv2
     url: 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html'
-  version: 2.0.1
+  version: 2.0.2
 servers:
   - url: 'http://localhost:8080/api/v2'
     description: qBittorrent Web UI API
@@ -1293,6 +1293,34 @@ paths:
               allOf:
                 - $ref: '#/components/schemas/Hashes'
               example: /api/v2/torrents/recheck?hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32|54eddd830a5b58480a6143d616a97e3a6c23c439
+            encoding:
+              hashes:
+                style: pipeDelimited
+                explode: false
+        required: true
+      responses:
+        '200':
+          description: All scenarios
+      security:
+        - sid: []
+  /torrents/reannounce:
+    post:
+      tags:
+        - torrents
+      summary: Reannounce torrents
+      description: 'Requires knowing the torrent hashes. You can get it from [torrent list](https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-list).'
+      externalDocs:
+        url: 'https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#reannounce-torrents'
+        description: WebUI-API on qBittorrent wiki
+      operationId: torrentsReannouncePost
+      requestBody:
+        description: 'The hashes of the torrents you want to reannounce. `hashes` can contain multiple hashes separated by `|`, to reannounce multiple torrents, or set to `all`, to reannounce all torrents.'
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Hashes'
+              example: /api/v2/torrents/reannounce?hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32|54eddd830a5b58480a6143d616a97e3a6c23c439
             encoding:
               hashes:
                 style: pipeDelimited

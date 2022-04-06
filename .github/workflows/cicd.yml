@@ -76,6 +76,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: openapi
+          path: specs
       - name: Commit bundled openapi spec
         if: github.event_name != 'pull_request'
         run: |

@@ -34,7 +34,7 @@ jobs:
         run: npm install
       - name: Bundle
         run: ./bundle.sh
-      - name: Commit bundled openapi spec
+      - name: Commit changed openapi specs
         if: github.event_name != 'pull_request'
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -42,16 +42,16 @@ jobs:
 
           git add .
           git commit -m "bundled new spec" || true
-      - name: Push bundled openapi spec
+      - name: Push changed openapi specs
         if: github.event_name != 'pull_request'
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
-      - name: Add version to filename
+      - name: Rename specs
         if: github.event_name != 'pull_request'
         run: ./rename.sh
-      - name: Upload spec
+      - name: Upload specs
         if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v3
         with:
@@ -77,7 +77,7 @@ jobs:
         with:
           name: openapi
           path: specs
-      - name: Commit bundled openapi spec
+      - name: Commit changed openapi specs
         if: github.event_name != 'pull_request'
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -86,9 +86,10 @@ jobs:
           sed -i "s/\(\surl: \"specs\/\)\(.*\)\/openapi.yaml\"/\1$(ls specs | tail -n 1)\/openapi.yaml\"/g" index.html
 
           git add specs
+          git commit -m "add new specs" || true
           git add index.html
-          git commit -m "add new spec and set as default" || true
-      - name: Push bundled openapi spec
+          git commit -m "set latest spec as default" || true
+      - name: Push changed openapi specs
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -9,7 +9,7 @@ info:
   license:
     name: GNU GPLv2
     url: 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html'
-  version: 2.7.0
+  version: 2.8.0
 servers:
   - url: 'http://localhost:8080/api/v2'
     description: qBittorrent Web UI API
@@ -2802,9 +2802,33 @@ paths:
         '200':
           description: All other scenarios
         '400':
-          description: Missing `name` parameter
+          description: Missing `newPath` parameter
         '409':
-          description: 'Invalid `name` or `id`, or `name` already in use'
+          description: 'Invalid `newPath` or `oldPath`, or `newPath` already in use'
+      security:
+        - sid: []
+  /torrents/renameFolder:
+    post:
+      tags:
+        - torrents
+      summary: Rename folder
+      externalDocs:
+        url: 'https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#rename-folder'
+        description: WebUI-API on qBittorrent wiki
+      operationId: torrentsRenameFolderPost
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RenameTorrentFiles'
+        required: true
+      responses:
+        '200':
+          description: All other scenarios
+        '400':
+          description: Missing `newPath` parameter
+        '409':
+          description: 'Invalid `newPath` or `oldPath`, or `newPath` already in use'
       security:
         - sid: []
   /rss/addFolder:
@@ -5134,17 +5158,16 @@ components:
         hash:
           type: string
           description: The hash of the torrent
-        id:
-          type: integer
-          format: int64
-          description: The id of the file to rename
-        name:
+        oldPath:
           type: string
-          description: The new name to use for the file
+          description: The old path of the torrent
+        newPath:
+          type: string
+          description: The new path to use for the file
       required:
         - hash
-        - id
-        - name
+        - oldPath
+        - newPath
     RssRuleDef:
       type: object
       properties:

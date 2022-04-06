@@ -1,5 +1,9 @@
 type: object
 properties:
+  index:
+    type: integer
+    format: int64
+    description: File index
   name:
     type: string
     description: File name (including relative path)

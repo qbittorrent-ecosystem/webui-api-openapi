@@ -9,6 +9,11 @@ properties:
   category:
     type: string
     description: Category for the torrent
+  tags:
+    type: array
+    items:
+      type: string
+    description: "Tags for the torrent, split by ','"
   skip_checking:
     type: string
     enum:

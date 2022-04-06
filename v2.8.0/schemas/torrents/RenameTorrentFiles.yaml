@@ -3,14 +3,13 @@ properties:
   hash:
     type: string
     description: The hash of the torrent
-  id:
-    type: integer
-    format: int64
-    description: The id of the file to rename
-  name:
+  oldPath:
     type: string
-    description: The new name to use for the file
+    description: The old path of the torrent
+  newPath:
+    type: string
+    description: The new path to use for the file
 required:
   - hash
-  - id
-  - name
+  - oldPath
+  - newPath

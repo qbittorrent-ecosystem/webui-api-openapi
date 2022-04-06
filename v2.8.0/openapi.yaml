@@ -154,6 +154,8 @@ paths:
     $ref: "./paths/torrents/setSuperSeeding.yaml"
   /torrents/renameFile:
     $ref: "./paths/torrents/renameFile.yaml"
+  /torrents/renameFolder:
+    $ref: "./paths/torrents/renameFolder.yaml"
 
   /rss/addFolder:
     $ref: "./paths/rss/addFolder.yaml"

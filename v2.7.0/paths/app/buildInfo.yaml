@@ -1,0 +1,17 @@
+get:
+  tags:
+    - app
+  summary: Get build info
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-build-info"
+    description: WebUI-API on qBittorrent wiki
+  operationId: appBuildInfoGet
+  responses:
+    "200":
+      description: All scenarios- see JSON below
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/app/BuildInfo.yaml"
+  security:
+    - sid: []

@@ -16,6 +16,11 @@ post:
             hash:
               type: string
               description: The hash of the torrent you want to get the contents of
+            indexes:
+              type: array
+              items:
+                type: string
+              description: The indexes of the files you want to retrieve. `indexes` can contain multiple values separated by `|`.
           required:
             - hash
         encoding:

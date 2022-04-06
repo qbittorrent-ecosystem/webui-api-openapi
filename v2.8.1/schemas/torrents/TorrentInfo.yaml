@@ -111,6 +111,10 @@ properties:
   save_path:
     type: string
     description: Path where this torrent's data is stored
+  seeding_time:
+    type: integer
+    format: int64
+    description: Torrent elapsed time while complete (seconds)
   seeding_time_limit:
     type: integer
     format: int64

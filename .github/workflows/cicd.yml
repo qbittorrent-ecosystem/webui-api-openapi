@@ -6,12 +6,12 @@ on:
       - master
     paths-ignore:
       - .github/dependabot.yml
-      - v2.*/build/*
+      - specs/v2.*/build/*
       - README.md
   pull_request:
     paths-ignore:
       - .github/dependabot.yml
-      - v2.*/build/*
+      - specs/v2.*/build/*
       - README.md
 
 concurrency: ${{ github.workflow }}
@@ -56,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: openapi
-          path: v2.*/openapi.yaml
+          path: specs/v2.*/openapi.yaml
 
   push-to-pages:
     name: Push new openapi spec to Github Pages
@@ -76,7 +76,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: openapi
-          path: specs
       - name: Commit bundled openapi spec
         if: github.event_name != 'pull_request'
         run: |

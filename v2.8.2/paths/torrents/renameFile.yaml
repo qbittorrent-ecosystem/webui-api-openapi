@@ -1,0 +1,23 @@
+post:
+  tags:
+    - torrents
+  summary: Rename file
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#rename-file"
+    description: WebUI-API on qBittorrent wiki
+  operationId: torrentsRenameFilePost
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          $ref: "../../schemas/torrents/RenameTorrentFiles.yaml"
+    required: true
+  responses:
+    "200":
+      description: All other scenarios
+    "400":
+      description: Missing `newPath` parameter
+    "409":
+      description: "Invalid `newPath` or `oldPath`, or `newPath` already in use"
+  security:
+    - sid: []

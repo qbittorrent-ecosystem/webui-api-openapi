@@ -1,0 +1,137 @@
+type: object
+description: |
+  The response is:
+  - empty, if the torrent hash is invalid
+  - otherwise, a JSON object with the following fields
+
+  NB: `-1` is returned if the type of the property is integer but its value is not known.
+properties:
+  save_path:
+    type: string
+    description: Torrent save path
+  creation_date:
+    type: integer
+    format: int64
+    description: Torrent creation date (Unix timestamp)
+  piece_size:
+    type: integer
+    format: int64
+    description: Torrent piece size (bytes)
+  comment:
+    type: string
+    description: Torrent comment
+  total_wasted:
+    type: integer
+    format: int64
+    description: Total data wasted for torrent (bytes)
+  total_uploaded:
+    type: integer
+    format: int64
+    description: Total data uploaded for torrent (bytes)
+  total_uploaded_session:
+    type: integer
+    format: int64
+    description: Total data uploaded this session (bytes)
+  total_downloaded:
+    type: integer
+    format: int64
+    description: Total data downloaded for torrent (bytes)
+  total_downloaded_session:
+    type: integer
+    format: int64
+    description: Total data downloaded this session (bytes)
+  up_limit:
+    type: integer
+    format: int64
+    description: Torrent upload limit (bytes/s)
+  dl_limit:
+    type: integer
+    format: int64
+    description: Torrent download limit (bytes/s)
+  time_elapsed:
+    type: integer
+    format: int64
+    description: Torrent elapsed time (seconds)
+  seeding_time:
+    type: integer
+    format: int64
+    description: Torrent elapsed time while complete (seconds)
+  nb_connections:
+    type: integer
+    format: int64
+    description: Torrent connection count
+  nb_connections_limit:
+    type: integer
+    format: int64
+    description: Torrent connection count limit
+  share_ratio:
+    type: number
+    format: float
+    description: Torrent share ratio
+  addition_date:
+    type: integer
+    format: int64
+    description: When this torrent was added (unix timestamp)
+  completion_date:
+    type: integer
+    format: int64
+    description: Torrent completion date (unix timestamp)
+  created_by:
+    type: string
+    description: Torrent creator
+  dl_speed_avg:
+    type: integer
+    format: int64
+    description: Torrent average download speed (bytes/second)
+  dl_speed:
+    type: integer
+    format: int64
+    description: Torrent download speed (bytes/second)
+  eta:
+    type: integer
+    format: int64
+    description: Torrent ETA (seconds)
+  last_seen:
+    type: integer
+    format: int64
+    description: Last seen complete date (unix timestamp)
+  peers:
+    type: integer
+    format: int64
+    description: Number of peers connected to
+  peers_total:
+    type: integer
+    format: int64
+    description: Number of peers in the swarm
+  pieces_have:
+    type: integer
+    format: int64
+    description: Number of pieces owned
+  pieces_num:
+    type: integer
+    format: int64
+    description: Number of pieces of the torrent
+  reannounce:
+    type: integer
+    format: int64
+    description: Number of seconds until the next announce
+  seeds:
+    type: integer
+    format: int64
+    description: Number of seeds connected to
+  seeds_total:
+    type: integer
+    format: int64
+    description: Number of seeds in the swarm
+  total_size:
+    type: integer
+    format: int64
+    description: Torrent total size (bytes)
+  up_speed_avg:
+    type: integer
+    format: int64
+    description: Torrent average upload speed (bytes/second)
+  up_speed:
+    type: integer
+    format: int64
+    description: Torrent upload speed (bytes/second)

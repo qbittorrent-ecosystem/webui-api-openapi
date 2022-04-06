@@ -1,0 +1,68 @@
+post:
+  tags:
+    - torrents
+  summary: Get torrent generic properties
+  description: "Requires knowing the torrent hash. You can get it from [torrent list](https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-list)."
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-generic-properties"
+    description: WebUI-API on qBittorrent wiki
+  operationId: torrentsPropertiesPost
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - hash
+          properties:
+            hash:
+              type: string
+              description: The hash of the torrent you want to get the generic properties of
+    required: true
+  responses:
+    "200":
+      description: All other scenarios- see JSON below
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/torrents/TorrentsProperties.yaml"
+          example: |
+            {
+              "addition_date":1438429165,
+              "comment":"\"Debian CD from cdimage.debian.org\"",
+              "completion_date":1438429234,
+              "created_by":"",
+              "creation_date":1433605214,
+              "dl_limit":-1,
+              "dl_speed":0,
+              "dl_speed_avg":9736015,
+              "eta":8640000,
+              "last_seen":1438430354,
+              "nb_connections":3,
+              "nb_connections_limit":250,
+              "peers":1,
+              "peers_total":89,
+              "piece_size":524288,
+              "pieces_have":1254,
+              "pieces_num":1254,
+              "reannounce":672,
+              "save_path":"/Downloads/debian-8.1.0-amd64-CD-1.iso",
+              "seeding_time":1128,
+              "seeds":1,
+              "seeds_total":254,
+              "share_ratio":0.00072121022562178299,
+              "time_elapsed":1197,
+              "total_downloaded":681521119,
+              "total_downloaded_session":681521119,
+              "total_size":657457152,
+              "total_uploaded":491520,
+              "total_uploaded_session":491520,
+              "total_wasted":23481724,
+              "up_limit":-1,
+              "up_speed":0,
+              "up_speed_avg":410
+            }
+    "404":
+      description: Torrent hash was not found
+  security:
+    - sid: []

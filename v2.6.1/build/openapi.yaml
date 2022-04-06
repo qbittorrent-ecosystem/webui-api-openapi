@@ -9,7 +9,7 @@ info:
   license:
     name: GNU GPLv2
     url: 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html'
-  version: 2.6.0
+  version: 2.6.1
 servers:
   - url: 'http://localhost:8080/api/v2'
     description: qBittorrent Web UI API
@@ -4538,6 +4538,9 @@ components:
           type: integer
           format: int64
           description: Time (Unix Epoch) when the torrent completed
+        content_path:
+          type: string
+          description: 'Absolute path of torrent content (root path for multifile torrents, absolute file path for singlefile torrents)'
         dl_limit:
           type: integer
           format: int64

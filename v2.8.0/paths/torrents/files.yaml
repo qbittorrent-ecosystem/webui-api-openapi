@@ -1,0 +1,54 @@
+post:
+  tags:
+    - torrents
+  summary: Get torrent contents
+  description: "Requires knowing the torrent hash. You can get it from [torrent list](https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-list)."
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-contents"
+    description: WebUI-API on qBittorrent wiki
+  operationId: torrentsFilesPost
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            hash:
+              type: string
+              description: The hash of the torrent you want to get the contents of
+          required:
+            - hash
+        encoding:
+          indexes:
+            style: pipeDelimited
+            explode: false
+    required: true
+  responses:
+    "200":
+      description: All other scenarios- see JSON below
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/torrents/TorrentsFiles.yaml"
+            description: |
+              The response is:
+                - empty, if the torrent hash is invalid
+                - otherwise, a JSON array, where each element contains info about one file, with the following fields
+            example: |
+              [
+                  {
+                    "index":0,
+                    "is_seed":false,
+                    "name":"debian-8.1.0-amd64-CD-1.iso",
+                    "piece_range":[0,1253],
+                    "priority":1,
+                    "progress":0,
+                    "size":657457152
+                  }
+              ]
+    "404":
+      description: Torrent hash was not found
+  security:
+    - sid: []

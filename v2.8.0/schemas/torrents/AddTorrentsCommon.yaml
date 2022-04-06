@@ -1,0 +1,66 @@
+type: object
+properties:
+  savepath:
+    type: string
+    description: Download folder
+  cookie:
+    type: string
+    description: Cookie sent to download the .torrent file
+  category:
+    type: string
+    description: Category for the torrent
+  tags:
+    type: array
+    items:
+      type: string
+    description: "Tags for the torrent, split by ','"
+  skip_checking:
+    type: string
+    enum:
+      - "true"
+      - "false"
+    default: "false"
+    description: "Skip hash checking. Possible values are `true`, `false` (default)"
+  paused:
+    type: string
+    enum:
+      - "true"
+      - "false"
+    default: "false"
+    description: "Add torrents in the paused state. Possible values are `true`, `false` (default)"
+  root_folder:
+    type: string
+    enum:
+      - "true"
+      - "false"
+      - unset
+    default: unset
+    description: "Create the root folder. Possible values are `true`, `false`, unset (default)"
+  rename:
+    type: string
+    description: Rename torrent
+  upLimit:
+    type: integer
+    format: int64
+    description: Set torrent upload speed limit. Unit in bytes/second
+  dlLimit:
+    type: integer
+    format: int64
+    description: Set torrent download speed limit. Unit in bytes/second
+  autoTMM:
+    type: boolean
+    description: Whether Automatic Torrent Management should be used
+  sequentialDownload:
+    type: string
+    enum:
+      - "true"
+      - "false"
+    default: "false"
+    description: "Enable sequential download. Possible values are `true`, `false` (default)"
+  firstLastPiecePrio:
+    type: string
+    enum:
+      - "true"
+      - "false"
+    default: "false"
+    description: "Prioritize download first last piece. Possible values are `true`, `false` (default)"

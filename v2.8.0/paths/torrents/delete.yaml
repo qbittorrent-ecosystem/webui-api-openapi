@@ -1,0 +1,37 @@
+post:
+  tags:
+    - torrents
+  summary: Delete torrents
+  description: "Requires knowing the torrent hashes. You can get it from [torrent list](https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-list)."
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#delete-torrents"
+    description: WebUI-API on qBittorrent wiki
+  operationId: torrentsDeletePost
+  requestBody:
+    description: "The hashes of the torrents you want to delete. `hashes` can contain multiple hashes separated by `|`, to delete multiple torrents, or set to `all`, to delete all torrents."
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          allOf:
+            - $ref: "../../schemas/torrents/Hashes.yaml"
+              example:
+                hashes: 8c212779b4abde7c6bc608063a0d008b7e40ce32
+          type: object
+          properties:
+            deleteFiles:
+              type: boolean
+              description: "If set to `true`, the downloaded data will also be deleted, otherwise has no effect."
+              example: false
+          required:
+            - deleteFiles
+          example: /api/v2/torrents/delete?hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32&deleteFiles=false
+        encoding:
+          hashes:
+            style: pipeDelimited
+            explode: false
+    required: true
+  responses:
+    "200":
+      description: All scenarios
+  security:
+    - sid: []

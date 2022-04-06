@@ -1,0 +1,45 @@
+post:
+  tags:
+    - torrents
+  summary: Set torrent name
+  description: "Requires knowing the torrent hash. You can get it from [torrent list](https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-list)."
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#set-torrent-name"
+    description: WebUI-API on qBittorrent wiki
+  operationId: torrentsRenamePost
+  requestBody:
+    description: |
+      ```
+      POST /api/v2/torrents/rename HTTP/1.1
+      User-Agent: Fiddler
+      Host: 127.0.0.1
+      Cookie: SID=your_sid
+      Content-Type: application/x-www-form-urlencoded
+      Content-Length: length
+
+      hash=8c212779b4abde7c6bc608063a0d008b7e40ce32&name=This%20is%20a%20test
+      ```
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            hash:
+              type: string
+              example: 8c212779b4abde7c6bc608063a0d008b7e40ce32
+            name:
+              type: string
+              example: This%20is%20a%20test
+          required:
+            - hash
+            - name
+    required: true
+  responses:
+    "200":
+      description: All other scenarios
+    "404":
+      description: Torrent hash is invalid
+    "409":
+      description: Torrent name is empty
+  security:
+    - sid: []

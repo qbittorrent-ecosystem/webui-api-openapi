@@ -1,0 +1,36 @@
+post:
+  tags:
+    - torrents
+  summary: Set torrent download limit
+  description: "Requires knowing the torrent hash. You can get it from [torrent list](https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-list)."
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#set-torrent-download-limit"
+    description: WebUI-API on qBittorrent wiki
+  operationId: torrentsSetDownloadLimitPost
+  requestBody:
+    description: |
+      ```
+      POST /api/v2/torrents/setDownloadLimit HTTP/1.1
+      User-Agent: Fiddler
+      Host: 127.0.0.1
+      Cookie: SID=your_sid
+      Content-Type: application/x-www-form-urlencoded
+      Content-Length: length
+
+      hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32|284b83c9c7935002391129fd97f43db5d7cc2ba0&limit=131072
+      ```
+      `hashes` can contain multiple hashes separated by `|` or set to `all` `limit` is the download speed limit in bytes per second you want to set.
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          $ref: "../../schemas/torrents/SetTorrentsLimit.yaml"
+        encoding:
+          hashes:
+            style: pipeDelimited
+            explode: false
+    required: true
+  responses:
+    "200":
+      description: All scenarios
+  security:
+    - sid: []

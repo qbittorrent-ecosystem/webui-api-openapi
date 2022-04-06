@@ -1,0 +1,35 @@
+post:
+  tags:
+    - search
+  summary: Enable search plugin
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#enable-search-plugin"
+    description: WebUI-API on qBittorrent wiki
+  operationId: searchEnablePluginPost
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            names:
+              type: array
+              items:
+                type: string
+              description: Name of the plugin to enable/disable (e.g. "legittorrents"). Supports multiple names separated by `|`
+            enable:
+              type: boolean
+              description: Whether the plugins should be enabled
+          required:
+            - names
+            - enable
+        encoding:
+          names:
+            style: pipeDelimited
+            explode: false
+    required: true
+  responses:
+    "200":
+      description: All scenarios
+  security:
+    - sid: []

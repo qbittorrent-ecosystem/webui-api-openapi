@@ -1,0 +1,44 @@
+post:
+  tags:
+    - torrents
+  summary: Add trackers to torrent
+  description: "Requires knowing the torrent hash. You can get it from [torrent list](https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-list)."
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#add-trackers-to-torrent"
+    description: WebUI-API on qBittorrent wiki
+  operationId: torrentsAddTrackersPost
+  requestBody:
+    description: |
+      ```
+      POST /api/v2/torrents/addTrackers HTTP/1.1
+      User-Agent: Fiddler
+      Host: 127.0.0.1
+      Cookie: SID=your_sid
+      Content-Type: application/x-www-form-urlencoded
+      Content-Length: length
+
+      hash=8c212779b4abde7c6bc608063a0d008b7e40ce32&urls=http://192.168.0.1/announce%0Audp://192.168.0.1:3333/dummyAnnounce
+      ```
+      This adds two trackers to torrent with hash `8c212779b4abde7c6bc608063a0d008b7e40ce32`. Note `%0A` (aka LF newline) between trackers. Ampersand in tracker urls MUST be escaped.
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          properties:
+            hash:
+              type: string
+              example: 8c212779b4abde7c6bc608063a0d008b7e40ce32
+            urls:
+              type: string
+              example: "http://192.168.0.1/announce%0Audp://192.168.0.1:3333/dummyAnnounce"
+          required:
+            - hash
+            - urls
+    required: true
+  responses:
+    "200":
+      description: All other scenarios- see JSON below
+    "404":
+      description: Torrent hash was not found
+  security:
+    - sid: []

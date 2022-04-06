@@ -1,0 +1,47 @@
+type: object
+properties:
+  index:
+    type: integer
+    format: int64
+    description: File index
+  name:
+    type: string
+    description: File name (including relative path)
+  size:
+    type: integer
+    format: int64
+    description: File size (bytes)
+  progress:
+    type: number
+    format: float
+    description: File progress (percentage/100)
+  priority:
+    type: integer
+    format: int64
+    enum:
+      - 0
+      - 1
+      - 6
+      - 7
+    description: |
+      File priority. See possible values here below
+
+      | Value | Description      |
+      | ----- | ---------------- |
+      | 0     | Do not download  |
+      | 1     | Normal priority  |
+      | 6     | High priority    |
+      | 7     | Maximal priority |
+  is_seed:
+    type: boolean
+    description: True if file is seeding/complete
+  piece_range:
+    type: array
+    items:
+      type: integer
+      format: int64
+    description: The first number is the starting piece index and the second number is the ending piece index (inclusive)
+  availability:
+    type: number
+    format: float
+    description: Percentage of file pieces currently available (percentage/100)

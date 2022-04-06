@@ -1,0 +1,78 @@
+get:
+  tags:
+    - search
+  summary: Get search plugins
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-search-plugins"
+    description: WebUI-API on qBittorrent wiki
+  operationId: searchPluginsGet
+  responses:
+    "200":
+      description: All scenarios- see JSON below
+      content:
+        application/json:
+          schema:
+            type: array
+            description: The response is a JSON array of objects containing the following fields
+            items:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+                  description: Whether the plugin is enabled
+                fullName:
+                  type: string
+                  description: Full name of the plugin
+                name:
+                  type: string
+                  description: Short name of the plugin
+                supportedCategories:
+                  type: array
+                  description: List of category objects
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                url:
+                  type: string
+                  description: URL of the torrent site
+                version:
+                  type: string
+                  description: Installed version of the plugin
+            example: |
+              [
+                {
+                    "enabled": true,
+                    "fullName": "Legit Torrents",
+                    "name": "legittorrents",
+                    "supportedCategories": [{
+                        "id": "all",
+                        "name": "All categories"
+                    }, {
+                        "id": "anime",
+                        "name": "Anime"
+                    }, {
+                        "id": "books",
+                        "name": "Books"
+                    }, {
+                        "id": "games",
+                        "name": "Games"
+                    }, {
+                        "id": "movies",
+                        "name": "Movies"
+                    }, {
+                        "id": "music",
+                        "name": "Music"
+                    }, {
+                        "id": "tv",
+                        "name": "TV shows"
+                    }],
+                    "url": "http://www.legittorrents.info",
+                    "version": "2.3"
+                }
+              ]
+  security:
+    - sid: []

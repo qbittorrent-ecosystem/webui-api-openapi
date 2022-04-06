@@ -9,7 +9,7 @@ info:
   license:
     name: GNU GPLv2
     url: 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html'
-  version: 2.8.0
+  version: 2.8.1
 servers:
   - url: 'http://localhost:8080/api/v2'
     description: qBittorrent Web UI API
@@ -4647,6 +4647,10 @@ components:
         save_path:
           type: string
           description: Path where this torrent's data is stored
+        seeding_time:
+          type: integer
+          format: int64
+          description: Torrent elapsed time while complete (seconds)
         seeding_time_limit:
           type: integer
           format: int64
@@ -5064,6 +5068,14 @@ components:
           type: integer
           format: int64
           description: Set torrent download speed limit. Unit in bytes/second
+        ratioLimit:
+          type: number
+          format: float
+          description: Set torrent share ratio limit
+        seedingTimeLimit:
+          type: integer
+          format: int64
+          description: Set torrent seeding time limit. Unit in seconds
         autoTMM:
           type: boolean
           description: Whether Automatic Torrent Management should be used

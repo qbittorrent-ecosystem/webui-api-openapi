@@ -47,6 +47,14 @@ properties:
     type: integer
     format: int64
     description: Set torrent download speed limit. Unit in bytes/second
+  ratioLimit:
+    type: number
+    format: float
+    description: Set torrent share ratio limit
+  seedingTimeLimit:
+    type: integer
+    format: int64
+    description: Set torrent seeding time limit. Unit in seconds
   autoTMM:
     type: boolean
     description: Whether Automatic Torrent Management should be used

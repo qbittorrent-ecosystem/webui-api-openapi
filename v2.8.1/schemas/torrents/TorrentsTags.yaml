@@ -1,0 +1,20 @@
+allOf:
+  - $ref: "./Hashes.yaml"
+type: object
+properties:
+  tags:
+    type: array
+    items:
+      type: string
+    example:
+      - TagName1
+      - TagName2
+required:
+  - tags
+example:
+  hashes:
+    - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+    - 284b83c9c7935002391129fd97f43db5d7cc2ba0
+  tags:
+    - TagName1
+    - TagName2

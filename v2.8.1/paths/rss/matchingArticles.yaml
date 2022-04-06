@@ -1,0 +1,52 @@
+post:
+  tags:
+    - rss
+  summary: Get all articles matching a rule
+  externalDocs:
+    url: "https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-all-articles-matching-a-rule"
+    description: WebUI-API on qBittorrent wiki
+  operationId: rssMatchingArticlesPost
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          type: object
+          required:
+            - ruleName
+          properties:
+            ruleName:
+              type: string
+              description: Rule name (e.g. "Linux")
+    required: true
+  responses:
+    "200":
+      description: All scenarios
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: string
+            description: "Returns all articles that match a rule by feed name in JSON format, e.g.:"
+            example: |
+              {
+                "DistroWatch":[
+                    "sparkylinux-5.11-i686-minimalgui.iso.torrent",
+                    "sparkylinux-5.11-x86_64-minimalgui.iso.torrent",
+                    "sparkylinux-5.11-i686-xfce.iso.torrent",
+                    "bluestar-linux-5.6.3-2020.04.09-x86_64.iso.torrent",
+                    "robolinux64-mate3d-v10.10.iso.torrent",
+                ],
+                "Linuxtracker":[
+                    "[Alpine Linux] alpine-extended-3.11.6",
+                    "[Alpine Linux] alpine-standard-3.11.6",
+                    "[Linuxfx] linuxfx10-wxs-lts-beta5.iso",
+                    "[Linux Lite] linux-lite-5.0-rc1-64bit.iso (MULTI)",
+                    "[Scientific Linux] SL-7.8-x86_64-Pack",
+                    "[NixOS] nixos-plasma5-20.03.1418.5272327b81e-x86_64-linux.iso"
+                ]
+              }
+  security:
+    - sid: []

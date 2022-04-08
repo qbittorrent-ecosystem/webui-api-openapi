@@ -83,10 +83,11 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
 
-          sed -i "s/\(\surl: \"specs\/\)\(.*\)\/openapi.yaml\"/\1$(ls specs | tail -n 1)\/openapi.yaml\"/g" index.html
-
           git add specs
           git commit -m "add new specs" || true
+
+          sed -i "s/\(\sversion = \)\"\(.*\)\"/\1\"$(ls specs | tail -1 | cut -c2-)\"/g" index.html
+
           git add index.html
           git commit -m "set latest spec as default" || true
       - name: Push changed openapi specs

@@ -2051,14 +2051,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    savePath:
-                      type: string
+                $ref: '#/components/schemas/TorrentsCategories'
                 example: |
                   {
                       "Video": {
@@ -2735,16 +2728,8 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/SearchJob'
                 description: The response is a JSON object with the following fields
-                properties:
-                  id:
-                    type: number
-                    description: ID of the search job
-                example: |
-                  {
-                    "id": 12345
-                  }
         '409':
           description: User has reached the limit of max `Running` searches (currently set to 5)
       security:
@@ -2762,11 +2747,8 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              type: object
-              properties:
-                id:
-                  type: number
-                  description: ID of the search job
+              allOf:
+                - $ref: '#/components/schemas/SearchJob'
               required:
                 - id
         required: true
@@ -2805,20 +2787,7 @@ paths:
                 type: array
                 description: The response is a JSON array of objects containing the following fields
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: number
-                      description: ID of the search job
-                    status:
-                      type: string
-                      enum:
-                        - Running
-                        - Stopped
-                      description: Current status of the search job (either `Running` or `Stopped`)
-                    total:
-                      type: number
-                      description: Total number of results. If the status is `Running` this number may contineu to increase
+                  $ref: '#/components/schemas/SearchJobStatus'
                 example: |
                   [
                     {
@@ -2844,17 +2813,16 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              type: object
-              properties:
-                id:
-                  type: number
-                  description: ID of the search job
-                limit:
-                  type: number
-                  description: max number of results to return. 0 or negative means no limit
-                offset:
-                  type: number
-                  description: result to start at. A negative number means count backwards (e.g. -2 returns the 2 most recent results)
+              allOf:
+                - $ref: '#/components/schemas/SearchJob'
+                - type: object
+                  properties:
+                    limit:
+                      type: number
+                      description: max number of results to return. 0 or negative means no limit
+                    offset:
+                      type: number
+                      description: result to start at. A negative number means count backwards (e.g. -2 returns the 2 most recent results)
               required:
                 - id
         required: true
@@ -2864,69 +2832,8 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/SearchResults'
                 description: The response is a JSON object with the following fields
-                properties:
-                  results:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        descrLink:
-                          type: string
-                          description: URL of the torrent's description page
-                        fileName:
-                          type: string
-                          description: Name of the file
-                        fileSize:
-                          type: number
-                          description: Size of the file in Bytes
-                        fileUrl:
-                          type: string
-                          description: Torrent download link (usually either .torrent file or magnet link)
-                        nbLeechers:
-                          type: number
-                          description: Number of leechers
-                        nbSeeders:
-                          type: number
-                          description: Number of seeders
-                        siteUrl:
-                          type: string
-                          description: URL of the torrent site
-                  status:
-                    type: string
-                    enum:
-                      - Running
-                      - Stopped
-                    description: Current status of the search job (either `Running` or `Stopped`)
-                  total:
-                    type: number
-                    description: Total number of results. If the status is `Running` this number may continue to increase
-                example: |
-                  {
-                    "results": [
-                        {
-                            "descrLink": "http://www.legittorrents.info/index.php?page=torrent-details&id=8d5f512e1acb687029b8d7cc6c5a84dce51d7a41",
-                            "fileName": "Ubuntu-10.04-32bit-NeTV.ova",
-                            "fileSize": -1,
-                            "fileUrl": "http://www.legittorrents.info/download.php?id=8d5f512e1acb687029b8d7cc6c5a84dce51d7a41&f=Ubuntu-10.04-32bit-NeTV.ova.torrent",
-                            "nbLeechers": 1,
-                            "nbSeeders": 0,
-                            "siteUrl": "http://www.legittorrents.info"
-                        },
-                        {
-                            "descrLink": "http://www.legittorrents.info/index.php?page=torrent-details&id=d5179f53e105dc2c2401bcfaa0c2c4936a6aa475",
-                            "fileName": "mangOH-Legato-17_06-Ubuntu-16_04.ova",
-                            "fileSize": -1,
-                            "fileUrl": "http://www.legittorrents.info/download.php?id=d5179f53e105dc2c2401bcfaa0c2c4936a6aa475&f=mangOH-Legato-17_06-Ubuntu-16_04.ova.torrent",
-                            "nbLeechers": 0,
-                            "nbSeeders": 59,
-                            "siteUrl": "http://www.legittorrents.info"
-                        }
-                    ],
-                    "status": "Running",
-                    "total": 2
-                  }
         '404':
           description: Search job was not found
         '409':
@@ -3005,59 +2912,25 @@ paths:
                 type: array
                 description: The response is a JSON array of objects containing the following fields
                 items:
-                  type: object
-                  properties:
-                    enabled:
-                      type: boolean
-                      description: Whether the plugin is enabled
-                    fullName:
-                      type: string
-                      description: Full name of the plugin
-                    name:
-                      type: string
-                      description: Short name of the plugin
-                    supportedCategories:
-                      type: array
-                      description: List of category objects
-                      items:
-                        type: string
-                    url:
-                      type: string
-                      description: URL of the torrent site
-                    version:
-                      type: string
-                      description: Installed version of the plugin
+                  $ref: '#/components/schemas/SearchPlugin'
                 example: |
                   [
-                    {
-                        "enabled": true,
-                        "fullName": "Legit Torrents",
-                        "name": "legittorrents",
-                        "supportedCategories": [{
-                            "id": "all",
-                            "name": "All categories"
-                        }, {
-                            "id": "anime",
-                            "name": "Anime"
-                        }, {
-                            "id": "books",
-                            "name": "Books"
-                        }, {
-                            "id": "games",
-                            "name": "Games"
-                        }, {
-                            "id": "movies",
-                            "name": "Movies"
-                        }, {
-                            "id": "music",
-                            "name": "Music"
-                        }, {
-                            "id": "tv",
-                            "name": "TV shows"
-                        }],
-                        "url": "http://www.legittorrents.info",
-                        "version": "2.3"
-                    }
+                      {
+                          "enabled": true,
+                          "fullName": "Legit Torrents",
+                          "name": "legittorrents",
+                          "supportedCategories": [
+                              "All categories",
+                              "Anime",
+                              "Books",
+                              "Games",
+                              "Movies",
+                              "Music",
+                              "TV shows"
+                          ],
+                          "url": "http://www.legittorrents.info",
+                          "version": "2.3"
+                      }
                   ]
       security:
         - sid: []
@@ -4431,6 +4304,15 @@ components:
           - 8c212779b4abde7c6bc608063a0d008b7e40ce32
           - 284b83c9c7935002391129fd97f43db5d7cc2ba0
         limit: 131072
+    TorrentsCategories:
+      type: object
+      additionalProperties:
+        type: object
+        properties:
+          name:
+            type: string
+          savePath:
+            type: string
     Category:
       type: object
       properties:
@@ -4522,6 +4404,117 @@ components:
         | addPaused                 | bool   | Add matched torrent in paused mode                      |
         | assignedCategory          | string | Assign category to the torrent                          |
         | savePath                  | string | Save torrent to the given directory                     |
+    SearchJob:
+      type: object
+      description: The response is a JSON object with the following fields
+      properties:
+        id:
+          type: number
+          description: ID of the search job
+      example: |
+        {
+          "id": 12345
+        }
+    SearchJobStatus:
+      allOf:
+        - $ref: '#/components/schemas/SearchJob'
+        - type: object
+          properties:
+            status:
+              type: string
+              enum:
+                - Running
+                - Stopped
+              description: Current status of the search job (either `Running` or `Stopped`)
+            total:
+              type: number
+              description: Total number of results. If the status is `Running` this number may contineu to increase
+    SearchResults:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              descrLink:
+                type: string
+                description: URL of the torrent's description page
+              fileName:
+                type: string
+                description: Name of the file
+              fileSize:
+                type: number
+                description: Size of the file in Bytes
+              fileUrl:
+                type: string
+                description: Torrent download link (usually either .torrent file or magnet link)
+              nbLeechers:
+                type: number
+                description: Number of leechers
+              nbSeeders:
+                type: number
+                description: Number of seeders
+              siteUrl:
+                type: string
+                description: URL of the torrent site
+        status:
+          type: string
+          enum:
+            - Running
+            - Stopped
+          description: Current status of the search job (either `Running` or `Stopped`)
+        total:
+          type: number
+          description: Total number of results. If the status is `Running` this number may continue to increase
+      example: |
+        {
+          "results": [
+              {
+                  "descrLink": "http://www.legittorrents.info/index.php?page=torrent-details&id=8d5f512e1acb687029b8d7cc6c5a84dce51d7a41",
+                  "fileName": "Ubuntu-10.04-32bit-NeTV.ova",
+                  "fileSize": -1,
+                  "fileUrl": "http://www.legittorrents.info/download.php?id=8d5f512e1acb687029b8d7cc6c5a84dce51d7a41&f=Ubuntu-10.04-32bit-NeTV.ova.torrent",
+                  "nbLeechers": 1,
+                  "nbSeeders": 0,
+                  "siteUrl": "http://www.legittorrents.info"
+              },
+              {
+                  "descrLink": "http://www.legittorrents.info/index.php?page=torrent-details&id=d5179f53e105dc2c2401bcfaa0c2c4936a6aa475",
+                  "fileName": "mangOH-Legato-17_06-Ubuntu-16_04.ova",
+                  "fileSize": -1,
+                  "fileUrl": "http://www.legittorrents.info/download.php?id=d5179f53e105dc2c2401bcfaa0c2c4936a6aa475&f=mangOH-Legato-17_06-Ubuntu-16_04.ova.torrent",
+                  "nbLeechers": 0,
+                  "nbSeeders": 59,
+                  "siteUrl": "http://www.legittorrents.info"
+              }
+          ],
+          "status": "Running",
+          "total": 2
+        }
+    SearchPlugin:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether the plugin is enabled
+        fullName:
+          type: string
+          description: Full name of the plugin
+        name:
+          type: string
+          description: Short name of the plugin
+        supportedCategories:
+          type: array
+          description: List of category objects
+          items:
+            type: string
+        url:
+          type: string
+          description: URL of the torrent site
+        version:
+          type: string
+          description: Installed version of the plugin
   securitySchemes:
     sid:
       type: apiKey

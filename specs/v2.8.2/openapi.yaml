@@ -257,6 +257,8 @@ components:
       $ref: "./schemas/search/SearchJob.yaml"
     SearchJobStatus:
       $ref: "./schemas/search/SearchJobStatus.yaml"
+    SearchResult:
+      $ref: "./schemas/search/SearchResult.yaml"
     SearchResults:
       $ref: "./schemas/search/SearchResults.yaml"
     SearchPlugin:

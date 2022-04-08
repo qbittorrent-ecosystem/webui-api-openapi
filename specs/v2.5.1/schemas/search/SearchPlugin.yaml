@@ -1,0 +1,22 @@
+type: object
+properties:
+  enabled:
+    type: boolean
+    description: Whether the plugin is enabled
+  fullName:
+    type: string
+    description: Full name of the plugin
+  name:
+    type: string
+    description: Short name of the plugin
+  supportedCategories:
+    type: array
+    description: List of category objects
+    items:
+      type: string
+  url:
+    type: string
+    description: URL of the torrent site
+  version:
+    type: string
+    description: Installed version of the plugin

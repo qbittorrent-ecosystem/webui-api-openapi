@@ -1,0 +1,13 @@
+allOf:
+  - $ref: "./SearchJob.yaml"
+  - type: object
+    properties:
+      status:
+        type: string
+        enum:
+          - Running
+          - Stopped
+        description: Current status of the search job (either `Running` or `Stopped`)
+      total:
+        type: number
+        description: Total number of results. If the status is `Running` this number may contineu to increase

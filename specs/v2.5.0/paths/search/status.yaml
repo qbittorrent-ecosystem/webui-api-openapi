@@ -25,20 +25,7 @@ post:
             type: array
             description: The response is a JSON array of objects containing the following fields
             items:
-              type: object
-              properties:
-                id:
-                  type: number
-                  description: ID of the search job
-                status:
-                  type: string
-                  enum:
-                    - Running
-                    - Stopped
-                  description: Current status of the search job (either `Running` or `Stopped`)
-                total:
-                  type: number
-                  description: Total number of results. If the status is `Running` this number may contineu to increase
+              $ref: "../../schemas/search/SearchJobStatus.yaml"
             example: |
               [
                 {

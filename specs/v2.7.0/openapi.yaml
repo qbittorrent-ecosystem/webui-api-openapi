@@ -251,6 +251,14 @@ components:
       $ref: "./schemas/torrents/RenameTorrentFiles.yaml"
     RssRuleDef:
       $ref: "./schemas/rss/RssRuleDef.yaml"
+    SearchJob:
+      $ref: "./schemas/search/SearchJob.yaml"
+    SearchJobStatus:
+      $ref: "./schemas/search/SearchJobStatus.yaml"
+    SearchResults:
+      $ref: "./schemas/search/SearchResults.yaml"
+    SearchPlugin:
+      $ref: "./schemas/search/SearchPlugin.yaml"
   securitySchemes:
     sid:
       type: apiKey

@@ -53,16 +53,8 @@ post:
       content:
         application/json:
           schema:
-            type: object
+            $ref: "../../schemas/search/SearchJob.yaml"
             description: The response is a JSON object with the following fields
-            properties:
-              id:
-                type: number
-                description: ID of the search job
-            example: |
-              {
-                "id": 12345
-              }
     "409":
       description: User has reached the limit of max `Running` searches (currently set to 5)
   security:

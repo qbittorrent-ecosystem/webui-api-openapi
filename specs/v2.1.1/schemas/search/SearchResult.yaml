@@ -1,0 +1,23 @@
+type: object
+properties:
+  descrLink:
+    type: string
+    description: URL of the torrent's description page
+  fileName:
+    type: string
+    description: Name of the file
+  fileSize:
+    type: number
+    description: Size of the file in Bytes
+  fileUrl:
+    type: string
+    description: Torrent download link (usually either .torrent file or magnet link)
+  nbLeechers:
+    type: number
+    description: Number of leechers
+  nbSeeders:
+    type: number
+    description: Number of seeders
+  siteUrl:
+    type: string
+    description: URL of the torrent site

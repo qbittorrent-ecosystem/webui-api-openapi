@@ -10,11 +10,8 @@ post:
     content:
       application/x-www-form-urlencoded:
         schema:
-          type: object
-          properties:
-            id:
-              type: number
-              description: ID of the search job
+          allOf:
+            - $ref: "../../schemas/search/SearchJob.yaml"
           required:
             - id
     required: true

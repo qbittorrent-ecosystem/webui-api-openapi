@@ -5149,35 +5149,37 @@ components:
             total:
               type: number
               description: Total number of results. If the status is `Running` this number may contineu to increase
+    SearchResult:
+      type: object
+      properties:
+        descrLink:
+          type: string
+          description: URL of the torrent's description page
+        fileName:
+          type: string
+          description: Name of the file
+        fileSize:
+          type: number
+          description: Size of the file in Bytes
+        fileUrl:
+          type: string
+          description: Torrent download link (usually either .torrent file or magnet link)
+        nbLeechers:
+          type: number
+          description: Number of leechers
+        nbSeeders:
+          type: number
+          description: Number of seeders
+        siteUrl:
+          type: string
+          description: URL of the torrent site
     SearchResults:
       type: object
       properties:
         results:
           type: array
           items:
-            type: object
-            properties:
-              descrLink:
-                type: string
-                description: URL of the torrent's description page
-              fileName:
-                type: string
-                description: Name of the file
-              fileSize:
-                type: number
-                description: Size of the file in Bytes
-              fileUrl:
-                type: string
-                description: Torrent download link (usually either .torrent file or magnet link)
-              nbLeechers:
-                type: number
-                description: Number of leechers
-              nbSeeders:
-                type: number
-                description: Number of seeders
-              siteUrl:
-                type: string
-                description: URL of the torrent site
+            $ref: '#/components/schemas/SearchResult'
         status:
           type: string
           enum:

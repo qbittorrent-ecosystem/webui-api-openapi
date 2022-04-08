@@ -12,14 +12,7 @@ get:
       content:
         application/json:
           schema:
-            type: object
-            additionalProperties:
-              type: object
-              properties:
-                name:
-                  type: string
-                savePath:
-                  type: string
+            $ref: "../../schemas/torrents/TorrentsCategories.yaml"
             example: |
               {
                   "Video": {

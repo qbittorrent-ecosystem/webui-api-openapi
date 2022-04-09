@@ -16,6 +16,6 @@
   },
   "homepage": "https://github.com/ultram4rine/qb-webui-api-openapi#readme",
   "devDependencies": {
-    "swagger-cli": "^4.0.4"
+    "@apidevtools/swagger-cli": "^4.0.4"
   }
 }

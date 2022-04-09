@@ -3268,13 +3268,15 @@ components:
             type: string
           description: List of hashes of torrents removed since last request
         categories:
-          type: object
-          properties:
-            name:
-              type: string
-            savePath:
-              type: string
           description: Info for categories added since last request
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              name:
+                type: string
+              savePath:
+                type: string
         categories_removed:
           type: array
           items:

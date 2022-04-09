@@ -4209,12 +4209,7 @@ components:
             type: string
           description: List of hashes of torrents removed since last request
         categories:
-          type: object
-          properties:
-            name:
-              type: string
-            savePath:
-              type: string
+          $ref: '#/components/schemas/TorrentsCategories'
           description: Info for categories added since last request
         categories_removed:
           type: array

@@ -3268,15 +3268,10 @@ components:
             type: string
           description: List of hashes of torrents removed since last request
         categories:
-          description: Info for categories added since last request
           type: object
+          description: Info for categories added since last request
           additionalProperties:
-            type: object
-            properties:
-              name:
-                type: string
-              savePath:
-                type: string
+            $ref: '#/components/schemas/TorrentsCategory'
         categories_removed:
           type: array
           items:
@@ -3901,6 +3896,13 @@ components:
           - 8c212779b4abde7c6bc608063a0d008b7e40ce32
           - 284b83c9c7935002391129fd97f43db5d7cc2ba0
         limit: 131072
+    TorrentsCategory:
+      type: object
+      properties:
+        name:
+          type: string
+        savePath:
+          type: string
     Category:
       type: object
       properties:

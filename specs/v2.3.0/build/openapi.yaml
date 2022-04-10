@@ -2250,7 +2250,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TorrentsCategories'
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/TorrentsCategory'
                 example: |
                   {
                       "Video": {
@@ -4163,8 +4165,10 @@ components:
             type: string
           description: List of hashes of torrents removed since last request
         categories:
-          $ref: '#/components/schemas/TorrentsCategories'
+          type: object
           description: Info for categories added since last request
+          additionalProperties:
+            $ref: '#/components/schemas/TorrentsCategory'
         categories_removed:
           type: array
           items:
@@ -4818,15 +4822,13 @@ components:
           - 8c212779b4abde7c6bc608063a0d008b7e40ce32
           - 284b83c9c7935002391129fd97f43db5d7cc2ba0
         limit: 131072
-    TorrentsCategories:
+    TorrentsCategory:
       type: object
-      additionalProperties:
-        type: object
-        properties:
-          name:
-            type: string
-          savePath:
-            type: string
+      properties:
+        name:
+          type: string
+        savePath:
+          type: string
     Category:
       type: object
       properties:

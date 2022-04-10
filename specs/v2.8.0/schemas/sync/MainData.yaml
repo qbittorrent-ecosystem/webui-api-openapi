@@ -19,8 +19,10 @@ properties:
       type: string
     description: List of hashes of torrents removed since last request
   categories:
-    $ref: "../torrents/TorrentsCategories.yaml"
+    type: object
     description: Info for categories added since last request
+    additionalProperties:
+      $ref: "../torrents/TorrentsCategory.yaml"
   categories_removed:
     type: array
     items:

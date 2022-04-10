@@ -235,8 +235,8 @@ components:
       $ref: "./schemas/torrents/TorrentsLimit.yaml"
     SetTorrentsLimit:
       $ref: "./schemas/torrents/SetTorrentsLimit.yaml"
-    TorrentsCategories:
-      $ref: "./schemas/torrents/TorrentsCategories.yaml"
+    TorrentsCategory:
+      $ref: "./schemas/torrents/TorrentsCategory.yaml"
     Category:
       $ref: "./schemas/torrents/Category.yaml"
     TorrentsTags:

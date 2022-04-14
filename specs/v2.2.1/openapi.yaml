@@ -183,58 +183,7 @@ paths:
 
 components:
   schemas:
-    Preferences:
-      $ref: "./schemas/app/Preferences.yaml"
-    MainLog:
-      $ref: "./schemas/log/MainLog.yaml"
-    PeersLog:
-      $ref: "./schemas/log/PeersLog.yaml"
-    MainData:
-      $ref: "./schemas/sync/MainData.yaml"
-    TorrentPeers:
-      $ref: "./schemas/sync/TorrentPeers.yaml"
-    TransferInfo:
-      $ref: "./schemas/transfer/TransferInfo.yaml"
-    TorrentInfo:
-      $ref: "./schemas/torrents/TorrentInfo.yaml"
-    TorrentsProperties:
-      $ref: "./schemas/torrents/TorrentsProperties.yaml"
-    TorrentsTrackers:
-      $ref: "./schemas/torrents/TorrentsTrackers.yaml"
-    TorrentsWebseeds:
-      $ref: "./schemas/torrents/TorrentsWebseeds.yaml"
-    TorrentsFiles:
-      $ref: "./schemas/torrents/TorrentsFiles.yaml"
-    Hashes:
-      $ref: "./schemas/torrents/Hashes.yaml"
-    AddTorrentsURLs:
-      $ref: "./schemas/torrents/AddTorrentsURLs.yaml"
-    AddTorrentsFiles:
-      $ref: "./schemas/torrents/AddTorrentsFiles.yaml"
-    AddTorrentsCommon:
-      $ref: "./schemas/torrents/AddTorrentsCommon.yaml"
-    TorrentsLimit:
-      $ref: "./schemas/torrents/TorrentsLimit.yaml"
-    SetTorrentsLimit:
-      $ref: "./schemas/torrents/SetTorrentsLimit.yaml"
-    TorrentsCategory:
-      $ref: "./schemas/torrents/TorrentsCategory.yaml"
-    Category:
-      $ref: "./schemas/torrents/Category.yaml"
-    SetTorrentsValue:
-      $ref: "./schemas/torrents/SetTorrentsValue.yaml"
-    RssRuleDef:
-      $ref: "./schemas/rss/RssRuleDef.yaml"
-    SearchJob:
-      $ref: "./schemas/search/SearchJob.yaml"
-    SearchJobStatus:
-      $ref: "./schemas/search/SearchJobStatus.yaml"
-    SearchResult:
-      $ref: "./schemas/search/SearchResult.yaml"
-    SearchResults:
-      $ref: "./schemas/search/SearchResults.yaml"
-    SearchPlugin:
-      $ref: "./schemas/search/SearchPlugin.yaml"
+    $ref: "./schemas/index.yaml"
   securitySchemes:
     sid:
       type: apiKey

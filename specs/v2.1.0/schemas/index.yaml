@@ -1,0 +1,47 @@
+Preferences:
+  $ref: "./app/Preferences.yaml"
+
+MainLog:
+  $ref: "./log/MainLog.yaml"
+PeersLog:
+  $ref: "./log/PeersLog.yaml"
+
+MainData:
+  $ref: "./sync/MainData.yaml"
+TorrentPeers:
+  $ref: "./sync/TorrentPeers.yaml"
+
+TransferInfo:
+  $ref: "./transfer/TransferInfo.yaml"
+
+TorrentInfo:
+  $ref: "./torrents/TorrentInfo.yaml"
+TorrentsProperties:
+  $ref: "./torrents/TorrentsProperties.yaml"
+TorrentsTrackers:
+  $ref: "./torrents/TorrentsTrackers.yaml"
+TorrentsWebseeds:
+  $ref: "./torrents/TorrentsWebseeds.yaml"
+TorrentsFiles:
+  $ref: "./torrents/TorrentsFiles.yaml"
+Hashes:
+  $ref: "./torrents/Hashes.yaml"
+AddTorrentsURLs:
+  $ref: "./torrents/AddTorrentsURLs.yaml"
+AddTorrentsFiles:
+  $ref: "./torrents/AddTorrentsFiles.yaml"
+AddTorrentsCommon:
+  $ref: "./torrents/AddTorrentsCommon.yaml"
+TorrentsLimit:
+  $ref: "./torrents/TorrentsLimit.yaml"
+SetTorrentsLimit:
+  $ref: "./torrents/SetTorrentsLimit.yaml"
+TorrentsCategory:
+  $ref: "./torrents/TorrentsCategory.yaml"
+Category:
+  $ref: "./torrents/Category.yaml"
+SetTorrentsValue:
+  $ref: "./torrents/SetTorrentsValue.yaml"
+
+RssRuleDef:
+  $ref: "./rss/RssRuleDef.yaml"

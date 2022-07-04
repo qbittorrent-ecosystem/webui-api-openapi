@@ -20,13 +20,12 @@ post:
           type: object
           properties:
             json:
-              type: string
+              $ref: "../../schemas/app/Preferences.yaml"
               description: A json object with key-value pairs of the settings you want to change and their new values.
-              allOf:
-                - $ref: "../../schemas/app/Preferences.yaml"
-              example: '{"save_path":"C:/Users/Dayman/Downloads","queueing_enabled":false,"scan_dirs":{"C:/Games": 0,"D:/Downloads": 1}}'
           required:
             - json
+        example:
+          json: '{"save_path":"C:/Users/Dayman/Downloads","queueing_enabled":false,"scan_dirs":{"C:/Games": 0,"D:/Downloads": 1}}'
         encoding:
           json:
             contentType: application/json

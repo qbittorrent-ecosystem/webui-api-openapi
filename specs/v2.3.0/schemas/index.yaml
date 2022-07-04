@@ -2,6 +2,8 @@ BuildInfo:
   $ref: "./app/BuildInfo.yaml"
 Preferences:
   $ref: "./app/Preferences.yaml"
+SetPreferences:
+  $ref: "./app/SetPreferences.yaml"
 
 MainLog:
   $ref: "./log/MainLog.yaml"

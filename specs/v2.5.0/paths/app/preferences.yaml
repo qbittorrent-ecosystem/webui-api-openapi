@@ -12,8 +12,7 @@ get:
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: "../../schemas/app/Preferences.yaml"
+            $ref: "../../schemas/app/Preferences.yaml"
             description: The response is a JSON object with several fields (key-value) pairs representing the application's settings. The contents may vary depending on which settings are present in qBittorrent.ini.
             example: |
               {

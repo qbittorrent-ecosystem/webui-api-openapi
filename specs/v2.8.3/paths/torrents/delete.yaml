@@ -14,17 +14,18 @@ post:
         schema:
           allOf:
             - $ref: "../../schemas/torrents/Hashes.yaml"
-              example:
-                hashes: 8c212779b4abde7c6bc608063a0d008b7e40ce32
-          type: object
-          properties:
-            deleteFiles:
-              type: boolean
-              description: "If set to `true`, the downloaded data will also be deleted, otherwise has no effect."
-              example: false
+            - type: object
+              properties:
+                deleteFiles:
+                  type: boolean
+                  description: "If set to `true`, the downloaded data will also be deleted, otherwise has no effect."
           required:
+            - hashes
             - deleteFiles
-          example: /api/v2/torrents/delete?hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32&deleteFiles=false
+        example:
+          hashes:
+            - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+          deleteFiles: false
         encoding:
           hashes:
             style: pipeDelimited

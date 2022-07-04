@@ -23,23 +23,21 @@ post:
     content:
       application/x-www-form-urlencoded:
         schema:
-          type: object
           allOf:
             - $ref: "../../schemas/torrents/Hashes.yaml"
-          properties:
-            category:
-              type: string
-              description: "`category` is the torrent category you want to set."
-              example: CategoryName
+            - type: object
+              properties:
+                category:
+                  type: string
+                  description: "`category` is the torrent category you want to set."
           required:
+            - hashes
             - category
-          example:
-            hashes:
-              [
-                8c212779b4abde7c6bc608063a0d008b7e40ce32,
-                284b83c9c7935002391129fd97f43db5d7cc2ba0,
-              ]
-            category: CategoryName
+        example:
+          hashes:
+            - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+            - 284b83c9c7935002391129fd97f43db5d7cc2ba0
+          category: CategoryName
         encoding:
           hashes:
             style: pipeDelimited

@@ -1,15 +1,13 @@
 allOf:
   - $ref: "./Hashes.yaml"
-type: object
-properties:
-  tags:
-    type: array
-    items:
-      type: string
-    example:
-      - TagName1
-      - TagName2
+  - type: object
+    properties:
+      tags:
+        type: array
+        items:
+          type: string
 required:
+  - hashes
   - tags
 example:
   hashes:

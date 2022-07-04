@@ -1,13 +1,13 @@
-type: object
 allOf:
   - $ref: "./Hashes.yaml"
-properties:
-  value:
-    type: boolean
-    default: false
-    description: "`value` is a boolean, affects the torrents listed in `hashes`, default is `false`"
-    example: true
+  - type: object
+    properties:
+      value:
+        type: boolean
+        default: false
+        description: "`value` is a boolean, affects the torrents listed in `hashes`, default is `false`"
 required:
+  - hashes
   - value
 example:
   hashes: 8c212779b4abde7c6bc608063a0d008b7e40ce32

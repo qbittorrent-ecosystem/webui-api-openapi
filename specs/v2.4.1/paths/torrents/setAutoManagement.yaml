@@ -23,20 +23,22 @@ post:
     content:
       application/x-www-form-urlencoded:
         schema:
-          type: object
           allOf:
             - $ref: "../../schemas/torrents/Hashes.yaml"
-          properties:
-            enable:
-              type: boolean
-              default: false
-              description: "`enable` is a boolean, affects the torrents listed in `hashes`, default is `false`"
-              example: true
-          example:
-            hashes: 8c212779b4abde7c6bc608063a0d008b7e40ce32|284b83c9c7935002391129fd97f43db5d7cc2ba0
-            enable: true
+            - type: object
+              properties:
+                enable:
+                  type: boolean
+                  default: false
+                  description: "`enable` is a boolean, affects the torrents listed in `hashes`, default is `false`"
           required:
+            - hashes
             - enable
+        example:
+          hashes:
+            - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+            - 284b83c9c7935002391129fd97f43db5d7cc2ba0
+          enable: true
         encoding:
           hashes:
             style: pipeDelimited

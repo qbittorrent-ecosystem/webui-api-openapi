@@ -12,9 +12,11 @@ post:
     content:
       application/x-www-form-urlencoded:
         schema:
-          allOf:
-            - $ref: "../../schemas/torrents/Hashes.yaml"
-          example: /api/v2/torrents/reannounce?hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32|54eddd830a5b58480a6143d616a97e3a6c23c439
+          $ref: "../../schemas/torrents/Hashes.yaml"
+        example:
+          hashes:
+            - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+            - 54eddd830a5b58480a6143d616a97e3a6c23c439
         encoding:
           hashes:
             style: pipeDelimited

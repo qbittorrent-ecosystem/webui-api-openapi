@@ -179,8 +179,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/Preferences'
+                $ref: '#/components/schemas/Preferences'
                 description: The response is a JSON object with several fields (key-value) pairs representing the application's settings. The contents may vary depending on which settings are present in qBittorrent.ini.
                 example: |
                   {
@@ -356,19 +355,11 @@ paths:
               type: object
               properties:
                 json:
-                  type: string
-                  description: A json object with key-value pairs of the settings you want to change and their new values.
-                  allOf:
-                    - $ref: '#/components/schemas/Preferences'
-                    - type: object
-                      properties:
-                        web_ui_password:
-                          type: string
-                          format: password
-                          description: 'For API ≥ v2.3.0: Plaintext WebUI password, not readable, write-only. For API < v2.3.0: MD5 hash of WebUI password, hash is generated from the following string: `username:Web UI Access:plain_text_web_ui_password`'
-                  example: '{"save_path":"C:/Users/Dayman/Downloads","queueing_enabled":false,"scan_dirs":{"C:/Games": 0,"D:/Downloads": 1}}'
+                  $ref: '#/components/schemas/SetPreferences'
               required:
                 - json
+            example:
+              json: '{"save_path":"C:/Users/Dayman/Downloads","queueing_enabled":false,"scan_dirs":{"C:/Games": 0,"D:/Downloads": 1}}'
             encoding:
               json:
                 contentType: application/json
@@ -1274,12 +1265,11 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/Hashes'
-              example:
-                hashes:
-                  - 8c212779b4abde7c6bc608063a0d008b7e40ce32
-                  - 54eddd830a5b58480a6143d616a97e3a6c23c439
+              $ref: '#/components/schemas/Hashes'
+            example:
+              hashes:
+                - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+                - 54eddd830a5b58480a6143d616a97e3a6c23c439
             encoding:
               hashes:
                 style: pipeDelimited
@@ -1305,9 +1295,11 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/Hashes'
-              example: /api/v2/torrents/resume?hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32|54eddd830a5b58480a6143d616a97e3a6c23c439
+              $ref: '#/components/schemas/Hashes'
+            example:
+              hashes:
+                - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+                - 54eddd830a5b58480a6143d616a97e3a6c23c439
             encoding:
               hashes:
                 style: pipeDelimited
@@ -1335,17 +1327,18 @@ paths:
             schema:
               allOf:
                 - $ref: '#/components/schemas/Hashes'
-                  example:
-                    hashes: 8c212779b4abde7c6bc608063a0d008b7e40ce32
-              type: object
-              properties:
-                deleteFiles:
-                  type: boolean
-                  description: 'If set to `true`, the downloaded data will also be deleted, otherwise has no effect.'
-                  example: false
+                - type: object
+                  properties:
+                    deleteFiles:
+                      type: boolean
+                      description: 'If set to `true`, the downloaded data will also be deleted, otherwise has no effect.'
               required:
+                - hashes
                 - deleteFiles
-              example: /api/v2/torrents/delete?hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32&deleteFiles=false
+            example:
+              hashes:
+                - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+              deleteFiles: false
             encoding:
               hashes:
                 style: pipeDelimited
@@ -1371,9 +1364,11 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/Hashes'
-              example: /api/v2/torrents/recheck?hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32|54eddd830a5b58480a6143d616a97e3a6c23c439
+              $ref: '#/components/schemas/Hashes'
+            example:
+              hashes:
+                - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+                - 54eddd830a5b58480a6143d616a97e3a6c23c439
             encoding:
               hashes:
                 style: pipeDelimited
@@ -1399,9 +1394,11 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/Hashes'
-              example: /api/v2/torrents/reannounce?hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32|54eddd830a5b58480a6143d616a97e3a6c23c439
+              $ref: '#/components/schemas/Hashes'
+            example:
+              hashes:
+                - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+                - 54eddd830a5b58480a6143d616a97e3a6c23c439
             encoding:
               hashes:
                 style: pipeDelimited
@@ -1690,9 +1687,11 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/Hashes'
-              example: /api/v2/torrents/increasePrio?hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32|54eddd830a5b58480a6143d616a97e3a6c23c439
+              $ref: '#/components/schemas/Hashes'
+            example:
+              hashes:
+                - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+                - 54eddd830a5b58480a6143d616a97e3a6c23c439
             encoding:
               hashes:
                 style: pipeDelimited
@@ -1720,9 +1719,11 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/Hashes'
-              example: /api/v2/torrents/decreasePrio?hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32|54eddd830a5b58480a6143d616a97e3a6c23c439
+              $ref: '#/components/schemas/Hashes'
+            example:
+              hashes:
+                - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+                - 54eddd830a5b58480a6143d616a97e3a6c23c439
             encoding:
               hashes:
                 style: pipeDelimited
@@ -1750,9 +1751,11 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/Hashes'
-              example: /api/v2/torrents/topPrio?hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32|54eddd830a5b58480a6143d616a97e3a6c23c439
+              $ref: '#/components/schemas/Hashes'
+            example:
+              hashes:
+                - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+                - 54eddd830a5b58480a6143d616a97e3a6c23c439
             encoding:
               hashes:
                 style: pipeDelimited
@@ -1780,9 +1783,11 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/Hashes'
-              example: /api/v2/torrents/bottomPrio?hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32|54eddd830a5b58480a6143d616a97e3a6c23c439
+              $ref: '#/components/schemas/Hashes'
+            example:
+              hashes:
+                - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+                - 54eddd830a5b58480a6143d616a97e3a6c23c439
             encoding:
               hashes:
                 style: pipeDelimited
@@ -1888,9 +1893,11 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/Hashes'
-              example: hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32|284b83c9c7935002391129fd97f43db5d7cc2ba0
+              $ref: '#/components/schemas/Hashes'
+            example:
+              hashes:
+                - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+                - 284b83c9c7935002391129fd97f43db5d7cc2ba0
             encoding:
               hashes:
                 style: pipeDelimited
@@ -1968,29 +1975,28 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              type: object
               allOf:
                 - $ref: '#/components/schemas/Hashes'
-              properties:
-                ratioLimit:
-                  type: number
-                  format: float
-                  description: '`ratioLimit` is the max ratio the torrent should be seeded until. `-2` means the global limit should be used, -1 means no limit.'
-                  example: 1
-                seedingTimeLimit:
-                  type: number
-                  format: float
-                  description: '`seedingTimeLimit` is the max amount of time the torrent should be seeded. `-2` means the global limit should be used, `-1` means no limit.'
-                  example: 60
+                - type: object
+                  properties:
+                    ratioLimit:
+                      type: number
+                      format: float
+                      description: '`ratioLimit` is the max ratio the torrent should be seeded until. `-2` means the global limit should be used, -1 means no limit.'
+                    seedingTimeLimit:
+                      type: number
+                      format: float
+                      description: '`seedingTimeLimit` is the max amount of time the torrent should be seeded. `-2` means the global limit should be used, `-1` means no limit.'
               required:
+                - hashes
                 - ratioLimit
                 - seedingTimeLimit
-              example:
-                hashes:
-                  - 8c212779b4abde7c6bc608063a0d008b7e40ce32
-                  - 284b83c9c7935002391129fd97f43db5d7cc2ba0
-                ratioLimit: 1
-                seedingTimeLimit: 60
+            example:
+              hashes:
+                - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+                - 284b83c9c7935002391129fd97f43db5d7cc2ba0
+              ratioLimit: 1
+              seedingTimeLimit: 60
             encoding:
               hashes:
                 style: pipeDelimited
@@ -2037,9 +2043,11 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/Hashes'
-              example: hashes=8c212779b4abde7c6bc608063a0d008b7e40ce32|284b83c9c7935002391129fd97f43db5d7cc2ba0
+              $ref: '#/components/schemas/Hashes'
+            example:
+              hashes:
+                - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+                - 284b83c9c7935002391129fd97f43db5d7cc2ba0
             encoding:
               hashes:
                 style: pipeDelimited
@@ -2117,20 +2125,21 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              type: object
               allOf:
                 - $ref: '#/components/schemas/Hashes'
-              properties:
-                location:
-                  type: string
-                  description: '`location` is the location to download the torrent to. If the location doesn''t exist, the torrent''s location is unchanged.'
+                - type: object
+                  properties:
+                    location:
+                      type: string
+                      description: '`location` is the location to download the torrent to. If the location doesn''t exist, the torrent''s location is unchanged.'
               required:
+                - hashes
                 - location
-              example:
-                hashes:
-                  - 8c212779b4abde7c6bc608063a0d008b7e40ce32
-                  - 284b83c9c7935002391129fd97f43db5d7cc2ba0
-                location: /mnt/nfs/media
+            example:
+              hashes:
+                - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+                - 284b83c9c7935002391129fd97f43db5d7cc2ba0
+              location: /mnt/nfs/media
             encoding:
               hashes:
                 style: pipeDelimited
@@ -2219,21 +2228,21 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              type: object
               allOf:
                 - $ref: '#/components/schemas/Hashes'
-              properties:
-                category:
-                  type: string
-                  description: '`category` is the torrent category you want to set.'
-                  example: CategoryName
+                - type: object
+                  properties:
+                    category:
+                      type: string
+                      description: '`category` is the torrent category you want to set.'
               required:
+                - hashes
                 - category
-              example:
-                hashes:
-                  - 8c212779b4abde7c6bc608063a0d008b7e40ce32
-                  - 284b83c9c7935002391129fd97f43db5d7cc2ba0
-                category: CategoryName
+            example:
+              hashes:
+                - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+                - 284b83c9c7935002391129fd97f43db5d7cc2ba0
+              category: CategoryName
             encoding:
               hashes:
                 style: pipeDelimited
@@ -2622,20 +2631,22 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              type: object
               allOf:
                 - $ref: '#/components/schemas/Hashes'
-              properties:
-                enable:
-                  type: boolean
-                  default: false
-                  description: '`enable` is a boolean, affects the torrents listed in `hashes`, default is `false`'
-                  example: true
-              example:
-                hashes: 8c212779b4abde7c6bc608063a0d008b7e40ce32|284b83c9c7935002391129fd97f43db5d7cc2ba0
-                enable: true
+                - type: object
+                  properties:
+                    enable:
+                      type: boolean
+                      default: false
+                      description: '`enable` is a boolean, affects the torrents listed in `hashes`, default is `false`'
               required:
+                - hashes
                 - enable
+            example:
+              hashes:
+                - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+                - 284b83c9c7935002391129fd97f43db5d7cc2ba0
+              enable: true
             encoding:
               hashes:
                 style: pipeDelimited
@@ -2661,10 +2672,11 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/Hashes'
-              example:
-                hashes: 8c212779b4abde7c6bc608063a0d008b7e40ce32|54eddd830a5b58480a6143d616a97e3a6c23c439
+              $ref: '#/components/schemas/Hashes'
+            example:
+              hashes:
+                - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+                - 54eddd830a5b58480a6143d616a97e3a6c23c439
             encoding:
               hashes:
                 style: pipeDelimited
@@ -2690,10 +2702,11 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/Hashes'
-              example:
-                hashes: 8c212779b4abde7c6bc608063a0d008b7e40ce32|54eddd830a5b58480a6143d616a97e3a6c23c439
+              $ref: '#/components/schemas/Hashes'
+            example:
+              hashes:
+                - 8c212779b4abde7c6bc608063a0d008b7e40ce32
+                - 54eddd830a5b58480a6143d616a97e3a6c23c439
             encoding:
               hashes:
                 style: pipeDelimited
@@ -3035,9 +3048,7 @@ paths:
                   type: string
                   description: Rule name (e.g. "Punisher")
                 ruleDef:
-                  type: string
-                  allOf:
-                    - $ref: '#/components/schemas/RssRuleDef'
+                  $ref: '#/components/schemas/RssRuleDef'
                   example: |
                     {
                       "enabled": false,
@@ -3239,24 +3250,14 @@ paths:
                   type: string
                   description: Pattern to search for (e.g. "Ubuntu 18.04")
                 plugins:
-                  oneOf:
-                    - type: string
-                      default: all
-                      enum:
-                        - all
-                    - type: array
-                      items:
-                        type: string
+                  type: array
+                  items:
+                    type: string
                   description: Plugins to use for searching (e.g. "legittorrents"). Supports multiple plugins separated by `|`. Also supports `all` and `enabled`
                 category:
-                  oneOf:
-                    - type: string
-                      default: all
-                      enum:
-                        - all
-                    - type: array
-                      items:
-                        type: string
+                  type: array
+                  items:
+                    type: string
                   description: Categories to limit your search to (e.g. "legittorrents"). Available categories depend on the specified `plugins`. Also supports `all`
               required:
                 - pattern
@@ -4232,6 +4233,16 @@ components:
             | ----- | ----------------- |
             | 0     | Prefer TCP        |
             | 1     | Peer proportional |
+    SetPreferences:
+      allOf:
+        - $ref: '#/components/schemas/Preferences'
+        - type: object
+          properties:
+            web_ui_password:
+              type: string
+              format: password
+              description: 'For API ≥ v2.3.0: Plaintext WebUI password, not readable, write-only. For API < v2.3.0: MD5 hash of WebUI password, hash is generated from the following string: `username:Web UI Access:plain_text_web_ui_password`'
+      description: A json object with key-value pairs of the settings you want to change and their new values.
     MainLog:
       type: object
       properties:
@@ -4834,14 +4845,9 @@ components:
       type: object
       properties:
         hashes:
-          oneOf:
-            - type: string
-              default: all
-              enum:
-                - all
-            - type: array
-              items:
-                type: string
+          type: array
+          items:
+            type: string
       required:
         - hashes
     AddTorrentsURLs:
@@ -4938,16 +4944,15 @@ components:
         8c212779b4abde7c6bc608063a0d008b7e40ce32: 338944
         284b83c9c7935002391129fd97f43db5d7cc2ba0: 123
     SetTorrentsLimit:
-      type: object
       allOf:
         - $ref: '#/components/schemas/Hashes'
-      properties:
-        limit:
-          type: integer
-          format: int64
-          description: ''
-          example: 131072
+        - type: object
+          properties:
+            limit:
+              type: integer
+              format: int64
       required:
+        - hashes
         - limit
       example:
         hashes:
@@ -4974,16 +4979,14 @@ components:
     TorrentsTags:
       allOf:
         - $ref: '#/components/schemas/Hashes'
-      type: object
-      properties:
-        tags:
-          type: array
-          items:
-            type: string
-          example:
-            - TagName1
-            - TagName2
+        - type: object
+          properties:
+            tags:
+              type: array
+              items:
+                type: string
       required:
+        - hashes
         - tags
       example:
         hashes:
@@ -4993,16 +4996,16 @@ components:
           - TagName1
           - TagName2
     SetTorrentsValue:
-      type: object
       allOf:
         - $ref: '#/components/schemas/Hashes'
-      properties:
-        value:
-          type: boolean
-          default: false
-          description: '`value` is a boolean, affects the torrents listed in `hashes`, default is `false`'
-          example: true
+        - type: object
+          properties:
+            value:
+              type: boolean
+              default: false
+              description: '`value` is a boolean, affects the torrents listed in `hashes`, default is `false`'
       required:
+        - hashes
         - value
       example:
         hashes: 8c212779b4abde7c6bc608063a0d008b7e40ce32

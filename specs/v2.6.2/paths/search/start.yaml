@@ -16,24 +16,14 @@ post:
               type: string
               description: Pattern to search for (e.g. "Ubuntu 18.04")
             plugins:
-              oneOf:
-                - type: string
-                  default: all
-                  enum:
-                    - all
-                - type: array
-                  items:
-                    type: string
+              type: array
+              items:
+                type: string
               description: Plugins to use for searching (e.g. "legittorrents"). Supports multiple plugins separated by `|`. Also supports `all` and `enabled`
             category:
-              oneOf:
-                - type: string
-                  default: all
-                  enum:
-                    - all
-                - type: array
-                  items:
-                    type: string
+              type: array
+              items:
+                type: string
               description: Categories to limit your search to (e.g. "legittorrents"). Available categories depend on the specified `plugins`. Also supports `all`
           required:
             - pattern

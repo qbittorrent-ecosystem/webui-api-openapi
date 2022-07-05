@@ -2,7 +2,7 @@
   "name": "qb-webui-api-openapi-swagger-ui",
   "description": "Swagger UI for qb-webui-api-openapi",
   "dependencies": {
-    "swagger-ui-dist": "^4.10.3"
+    "swagger-ui-dist": "^4.12.0"
   },
   "repository": {
     "type": "git",
